@@ -32,6 +32,9 @@ compile_commands.json
 # Scripts tools
 .scripts/
 
+# IDE local config
+.vscode/
+
 # OS
 .DS_Store
 Thumbs.db
