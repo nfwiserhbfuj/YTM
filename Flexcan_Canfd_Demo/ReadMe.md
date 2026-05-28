@@ -6,52 +6,56 @@
 
 ## 运行环境
 
-本演示代码运行在 **YTM32B1ME0** 芯片的单个 CAN 实例（CAN0）上，配置了 39 个邮箱，结合 64 字节与 8 字节 payload 的 CAN FD 数据帧收发。
+本演示代码运行在 **YTM32B1ME0** 芯片的单个 CAN 实例（CAN0）上，配置了 38 个邮箱，Region 0（MBDSR0）使用 16 字节 payload，Region 1（MBDSR1）使用 8 字节 payload 的 CAN FD 数据帧收发。
 
 ## 邮箱总览
 
+应用程序中实际使用的邮箱如下：
 
-| MB | 方向 | 负载 | ID 类型 |    CAN ID    |  位于哪个 Region  |
-| :-: | :--: | :--: | :-----: | :----------: | :---------------: |
-| 0 |  RX  | 64B |   STD   |   `0x100`   | Region 0 (MBDSR0) |
-| 1 |  RX  | 64B |   STD   |   `0x101`   | Region 0 (MBDSR0) |
-| 2 |  RX  | 64B |   EXT   | `0x18DA00F1` | Region 0 (MBDSR0) |
-| 3 |  TX  | 64B |   STD   |   `0x200`   | Region 0 (MBDSR0) |
-| 4 |  TX  | 64B |   STD   |   `0x201`   | Region 0 (MBDSR0) |
-| 5 |  TX  | 64B |   EXT   | `0x1AABBCC` | Region 0 (MBDSR0) |
-| 6 |  TX  | 64B |   EXT   | `0x1AABBCD` | Region 0 (MBDSR0) |
-| 7 |  RX  |  8B  |   STD   |   `0x102`   | Region 1 (MBDSR1) |
-| 8 |  RX  |  8B  |   STD   |   `0x103`   | Region 1 (MBDSR1) |
-| 9 |  RX  |  8B  |   STD   |   `0x104`   | Region 1 (MBDSR1) |
-| 10 |  RX  |  8B  |   STD   |   `0x105`   | Region 1 (MBDSR1) |
-| 11 |  RX  |  8B  |   STD   |   `0x106`   | Region 1 (MBDSR1) |
-| 12 |  RX  |  8B  |   STD   |   `0x107`   | Region 1 (MBDSR1) |
-| 13 |  RX  |  8B  |   STD   |   `0x108`   | Region 1 (MBDSR1) |
-| 14 |  RX  |  8B  |   STD   |   `0x109`   | Region 1 (MBDSR1) |
-| 15 |  RX  |  8B  |   EXT   | `0x18DA00F2` | Region 1 (MBDSR1) |
-| 16 |  RX  |  8B  |   EXT   | `0x18DA00F3` | Region 1 (MBDSR1) |
-| 17 |  RX  |  8B  |   EXT   | `0x18DA00F4` | Region 1 (MBDSR1) |
-| 18 |  RX  |  8B  |   EXT   | `0x18DA00F5` | Region 1 (MBDSR1) |
-| 19 |  RX  |  8B  |   EXT   | `0x18DA00F6` | Region 1 (MBDSR1) |
-| 20 |  RX  |  8B  |   EXT   | `0x18DA00F7` | Region 1 (MBDSR1) |
-| 21 |  RX  |  8B  |   EXT   | `0x18DA00F8` | Region 1 (MBDSR1) |
-| 22 |  RX  |  8B  |   EXT   | `0x18DA00F9` | Region 1 (MBDSR1) |
-| 23 |  TX  |  8B  |   STD   |   `0x202`   | Region 1 (MBDSR1) |
-| 24 |  TX  |  8B  |   STD   |   `0x203`   | Region 1 (MBDSR1) |
-| 25 |  TX  |  8B  |   STD   |   `0x204`   | Region 1 (MBDSR1) |
-| 26 |  TX  |  8B  |   STD   |   `0x205`   | Region 1 (MBDSR1) |
-| 27 |  TX  |  8B  |   STD   |   `0x206`   | Region 1 (MBDSR1) |
-| 28 |  TX  |  8B  |   STD   |   `0x207`   | Region 1 (MBDSR1) |
-| 29 |  TX  |  8B  |   STD   |   `0x208`   | Region 1 (MBDSR1) |
-| 30 |  TX  |  8B  |   STD   |   `0x209`   | Region 1 (MBDSR1) |
-| 31 |  TX  |  8B  |   EXT   | `0x1AABBCE` | Region 1 (MBDSR1) |
-| 32 |  TX  |  8B  |   EXT   | `0x1AABBCF` | Region 1 (MBDSR1) |
-| 33 |  TX  |  8B  |   EXT   | `0x1AABBD0` | Region 1 (MBDSR1) |
-| 34 |  TX  |  8B  |   EXT   | `0x1AABBD1` | Region 1 (MBDSR1) |
-| 35 |  TX  |  8B  |   EXT   | `0x1AABBD2` | Region 1 (MBDSR1) |
-| 36 |  TX  |  8B  |   EXT   | `0x1AABBD3` | Region 1 (MBDSR1) |
-| 37 |  TX  |  8B  |   EXT   | `0x1AABBD4` | Region 1 (MBDSR1) |
-| 38 |  TX  |  8B  |   EXT   | `0x1AABBD5` | Region 1 (MBDSR1) |
+
+| 逻辑 MB | 物理 MB 索引 | 方向 | 负载 | ID 类型 |    CAN ID    |  位于哪个 Region  |
+| :-----: | :----------: | :--: | :--: | :-----: | :----------: | :---------------: |
+|    0    |      0      |  RX  | 16B |   STD   |   `0x100`   | Region 0 (MBDSR0) |
+|    1    |      1      |  RX  | 16B |   STD   |   `0x101`   | Region 0 (MBDSR0) |
+|    2    |      2      |  RX  | 16B |   EXT   | `0x18DA00F1` | Region 0 (MBDSR0) |
+|    3    |      3      |  TX  | 16B |   STD   |   `0x200`   | Region 0 (MBDSR0) |
+|    4    |      4      |  TX  | 16B |   STD   |   `0x201`   | Region 0 (MBDSR0) |
+|    5    |      5      |  TX  | 16B |   EXT   | `0x1AABBCC` | Region 0 (MBDSR0) |
+|    6    |      6      |  TX  | 16B |   EXT   | `0x1AABBCD` | Region 0 (MBDSR0) |
+|    7    |      21      |  RX  |  8B  |   STD   |   `0x102`   | Region 1 (MBDSR1) |
+|    8    |      22      |  RX  |  8B  |   STD   |   `0x103`   | Region 1 (MBDSR1) |
+|    9    |      23      |  RX  |  8B  |   STD   |   `0x104`   | Region 1 (MBDSR1) |
+|   10   |      24      |  RX  |  8B  |   STD   |   `0x105`   | Region 1 (MBDSR1) |
+|   11   |      25      |  RX  |  8B  |   STD   |   `0x106`   | Region 1 (MBDSR1) |
+|   12   |      26      |  RX  |  8B  |   STD   |   `0x107`   | Region 1 (MBDSR1) |
+|   13   |      27      |  RX  |  8B  |   STD   |   `0x108`   | Region 1 (MBDSR1) |
+|   14   |      28      |  RX  |  8B  |   STD   |   `0x109`   | Region 1 (MBDSR1) |
+|   15   |      29      |  RX  |  8B  |   EXT   | `0x18DA00F2` | Region 1 (MBDSR1) |
+|   16   |      30      |  RX  |  8B  |   EXT   | `0x18DA00F3` | Region 1 (MBDSR1) |
+|   17   |      31      |  RX  |  8B  |   EXT   | `0x18DA00F4` | Region 1 (MBDSR1) |
+|   18   |      32      |  RX  |  8B  |   EXT   | `0x18DA00F5` | Region 1 (MBDSR1) |
+|   19   |      33      |  RX  |  8B  |   EXT   | `0x18DA00F6` | Region 1 (MBDSR1) |
+|   20   |      34      |  RX  |  8B  |   EXT   | `0x18DA00F7` | Region 1 (MBDSR1) |
+|   21   |      35      |  RX  |  8B  |   EXT   | `0x18DA00F8` | Region 1 (MBDSR1) |
+|   22   |      36      |  RX  |  8B  |   EXT   | `0x18DA00F9` | Region 1 (MBDSR1) |
+|   23   |      37      |  TX  |  8B  |   STD   |   `0x202`   | Region 1 (MBDSR1) |
+|   24   |      38      |  TX  |  8B  |   STD   |   `0x203`   | Region 1 (MBDSR1) |
+|   25   |      39      |  TX  |  8B  |   STD   |   `0x204`   | Region 1 (MBDSR1) |
+|   26   |      40      |  TX  |  8B  |   STD   |   `0x205`   | Region 1 (MBDSR1) |
+|   27   |      41      |  TX  |  8B  |   STD   |   `0x206`   | Region 1 (MBDSR1) |
+|   28   |      42      |  TX  |  8B  |   STD   |   `0x207`   | Region 1 (MBDSR1) |
+|   29   |      43      |  TX  |  8B  |   STD   |   `0x208`   | Region 1 (MBDSR1) |
+|   30   |      44      |  TX  |  8B  |   STD   |   `0x209`   | Region 1 (MBDSR1) |
+|   31   |      45      |  TX  |  8B  |   EXT   | `0x1AABBCE` | Region 1 (MBDSR1) |
+|   32   |      46      |  TX  |  8B  |   EXT   | `0x1AABBCF` | Region 1 (MBDSR1) |
+|   33   |      47      |  TX  |  8B  |   EXT   | `0x1AABBD0` | Region 1 (MBDSR1) |
+|   34   |      48      |  TX  |  8B  |   EXT   | `0x1AABBD1` | Region 1 (MBDSR1) |
+|   35   |      49      |  TX  |  8B  |   EXT   | `0x1AABBD2` | Region 1 (MBDSR1) |
+|   36   |      50      |  TX  |  8B  |   EXT   | `0x1AABBD3` | Region 1 (MBDSR1) |
+|   37   |      51      |  TX  |  8B  |   EXT   | `0x1AABBD4` | Region 1 (MBDSR1) |
+|   38   |      52      |  TX  |  8B  |   EXT   | `0x1AABBD5` | Region 1 (MBDSR1) |
+
+> **注意**：上述表格中"逻辑 MB"是应用层的连续编号，"物理 MB 索引"是传递给 `FLEXCAN_DRV_ConfigRxMb` / `FLEXCAN_DRV_ConfigTxMb` 的实际参数值。物理 MB 索引不是连续的：Region 0 占用了物理索引 0~20（共 21 个 MB，应用层仅使用 0~6），Region 1 的邮箱从物理索引 21 开始。
 
 ### ID 公式
 
@@ -62,46 +66,46 @@
 #define TX_MSG_ID2 (0x1AABBCC)     // 扩展帧 TX 基准
 ```
 
-- 64B RX MB 0~2：`RX_MSG_ID1`, `RX_MSG_ID1+1`, `RX_MSG_ID2`
-- 64B TX MB 3~6：`TX_MSG_ID1`, `TX_MSG_ID1+1`, `TX_MSG_ID2`, `TX_MSG_ID2+1`
-- 8B RX STD MB 7~14：`RX_MSG_ID1 + i + 2`，i=0-7
-- 8B RX EXT MB 15~22：`RX_MSG_ID2 + i + 2`，i=0-7
-- 8B TX STD MB 23~30：`TX_MSG_ID1 + i + 2`，i=0-7
-- 8B TX EXT MB 31~38：`TX_MSG_ID2 + i + 2`，i=0-7
+- 16B RX MB 0~2：`RX_MSG_ID1`, `RX_MSG_ID1+1`, `RX_MSG_ID2`
+- 16B TX MB 3~6：`TX_MSG_ID1`, `TX_MSG_ID1+1`, `TX_MSG_ID2`, `TX_MSG_ID2+1`
+- 8B RX STD MB 21~29：`RX_MSG_ID1 + i + 2`，i=0-7
+- 8B RX EXT MB 29~36：`RX_MSG_ID2 + i + 2`，i=0-7
+- 8B TX STD MB 37~44：`TX_MSG_ID1 + i + 2`，i=0-7
+- 8B TX EXT MB 45~52：`TX_MSG_ID2 + i + 2`，i=0-7
 
 ## 邮箱分组
 
-### 第一组：64B 负载 (MB 0~6, Region 0)
+### 第一组：16B 负载 (物理 MB 0~6, Region 0)
 
 
 | MB | 功能 | 说明                                        |
 | :-: | :--- | :------------------------------------------ |
-| 0~2 | RX   | 接收 64B CAN FD 帧                          |
-| 3~6 | TX   | 发送 64B CAN FD 帧，数据 = offset1 + i 递增 |
+| 0~2 | RX   | 接收 16B CAN FD 帧                          |
+| 3~6 | TX   | 发送 16B CAN FD 帧，数据 = offset1 + i 递增 |
 
-### 第二组：8B RX (MB 7~22, Region 1)
+### 第二组：8B RX (物理 MB 21~36, Region 1)
 
 
 | MB 范围 | 帧类型 |           ID 范围           |
 | :-----: | :----: | :-------------------------: |
-|  7~14  | 标准帧 |      `0x102` ~ `0x109`      |
-|  15~22  | 扩展帧 | `0x18DA00F2` ~ `0x18DA00F9` |
+|  21~28  | 标准帧 |      `0x102` ~ `0x109`      |
+|  29~36  | 扩展帧 | `0x18DA00F2` ~ `0x18DA00F9` |
 
-### 第三组：8B TX (MB 23~38, Region 1)
+### 第三组：8B TX (物理 MB 37~52, Region 1)
 
 
 | MB 范围 | 帧类型 |          ID 范围          |
 | :-----: | :----: | :-----------------------: |
-|  23~30  | 标准帧 |     `0x202` ~ `0x209`     |
-|  31~38  | 扩展帧 | `0x1AABBCE` ~ `0x1AABBD5` |
+|  37~44  | 标准帧 |     `0x202` ~ `0x209`     |
+|  45~52  | 扩展帧 | `0x1AABBCE` ~ `0x1AABBD5` |
 
 ## 程序流程
 
 ```
-1. Board_Init() → 时钟/引脚/CAN0(Region0=64B, Region1=8B, 39MB)
+1. Board_Init() → 时钟/引脚/CAN0(Region0=16B, Region1=8B, 53MB)
 2. 注册回调 → RX COMPLETE 时 can0_rx_flag++, 自动 re-arm
 3. 配置 39 个邮箱 (RxMb/TxMb)
-4. 启动接收 (Receive on MB 0~2, 7~22)
+4. 启动接收 (Receive on MB 0~2, 21~36)
 5. while(1): 检查状态 → Send 数据 → Delay(10ms)
 ```
 
@@ -128,10 +132,10 @@ FLEXCAN_DRV_InstallEventCallback(0, Can0Tp_Hal_EventCallback, NULL);
 ## 数据流示例
 
 ```
-CAN0 MB3 发送 64B → 对端 CAN5 MB0 接收:
-  ID=0x200, DLC=15, Data=[0x01..0x40], BRS=1, IDE=0
+CAN0 MB3 发送 16B → 对端接收:
+  ID=0x200, DLC=4, Data=[0x00..0x0F], BRS=1, IDE=0
 
-CAN0 MB23 发送 8B → 对端 CAN5 MB7 接收:
+CAN0 MB37 (逻辑23) 发送 8B → 对端接收:
   ID=0x202, DLC=8, Data=txMsg0前8字节, BRS=1, IDE=0
 ```
 
@@ -141,57 +145,198 @@ CAN0 MB23 发送 8B → 对端 CAN5 MB7 接收:
 
 原始代码（`C:\Users\ytm\Desktop\test\ME0\Flexcan_Canfd_Demo`）中，**Region 0 和 Region 1 使用相同的负载大小**（由 `flexcanInitConfig.payload` 统一配置，例如 `FLEXCAN_PAYLOAD_SIZE_64`）。所有邮箱无论位于哪个 Region，都有相同大小的数据区。
 
-本修改方案的目标是：**让 Region 0（MBDSR0）和 Region 1（MBDSR1）使用不同负载大小**，具体为 **Region 0 = 64 bytes，Region 1 = 8 bytes**。
+本修改方案的目标是：**让 Region 0（MBDSR0）和 Region 1（MBDSR1）使用不同负载大小**，具体为 **Region 0 = 16 bytes，Region 1 = 8 bytes**。
 
-> **核心原理**：YTM32B1ME0 的 FlexCAN 模块有 1024 bytes（256 words）的 Message Buffer RAM，分为两个 512 bytes 块。通过 FDCTRL 寄存器中的 MBDSR0 和 MBDSR1 位域，可以分别为两块 RAM 设置不同的 payload 大小。
-
----
-
-## 修改涉及的 4 个文件
-
-
-| 文件                  | 路径                                               | 说明                             |
-| :-------------------- | :------------------------------------------------- | :------------------------------- |
-| `flexcan_hw_access.h` | `platform/drivers/src/flexcan/flexcan_hw_access.h` | 函数声明                         |
-| `flexcan_hw_access.c` | `platform/drivers/src/flexcan/flexcan_hw_access.c` | 底层硬件访问函数（**5 处修改**） |
-| `can_config.c`        | `board/can_config.c`                               | 驱动初始化参数                   |
-| `main.c`              | `app/main.c`                                       | 应用层邮箱分配和收发逻辑         |
+> **核心原理**：YTM32B1ME0 的 FlexCAN 模块有 1024 bytes（256 words）的 Message Buffer RAM，分为两个 512 bytes 块。通过 FDCTRL 寄存器中的 MBDSR0 和 MBDSR1 位域，可以分别为两块 RAM 设置不同的 payload 大小。`FEATURE_CAN_HAS_MBDSR1` 特性宏已使能。
 
 ---
 
-## 修改 1：函数声明 `flexcan_hw_access.h`
+## 修改涉及的 6 个文件
+
+
+| 文件                  | 路径                                               | 说明                               |
+| :-------------------- | :------------------------------------------------- | :--------------------------------- |
+| `flexcan_driver.h`    | `platform/drivers/inc/flexcan_driver.h`            | 配置结构体定义                     |
+| `flexcan_driver.c`    | `platform/drivers/src/flexcan/flexcan_driver.c`    | 驱动层 Init 和 GetDefaultConfig    |
+| `flexcan_hw_access.h` | `platform/drivers/src/flexcan/flexcan_hw_access.h` | 硬件访问层函数声明                 |
+| `flexcan_hw_access.c` | `platform/drivers/src/flexcan/flexcan_hw_access.c` | 硬件访问层函数实现（**7 处修改**） |
+| `can_config.c`        | `board/can_config.c`                               | 驱动初始化参数                     |
+| `main.c`              | `app/main.c`                                       | 应用层邮箱分配和收发逻辑           |
+
+---
+
+## 修改 1：`flexcan_user_config_t` 结构体 —— 拆分 payload 字段
 
 ### 位置
 
 ```
-platform/drivers/src/flexcan/flexcan_hw_access.h 第 590 行
+platform/drivers/inc/flexcan_driver.h 第 350 行附近
 ```
 
 ### 修改前（原始代码）
 
 ```c
+typedef struct
+{
+    ...
+#if FEATURE_CAN_HAS_FD
+    flexcan_fd_payload_size_t payload;              /*!< The payload size of the mailboxes specified in bytes. */
+    bool fd_enable;                                 /*!< Enable/Disable the Flexible Data Rate feature. */
+#endif
+    ...
+} flexcan_user_config_t;
+```
+
+### 修改后
+
+```c
+typedef struct
+{
+    ...
+#if FEATURE_CAN_HAS_FD
+    flexcan_fd_payload_size_t region0_payload;      /*!< The payload size of Region 0 (MBDSR0) mailboxes specified in bytes. */
+    flexcan_fd_payload_size_t region1_payload;      /*!< The payload size of Region 1 (MBDSR1) mailboxes specified in bytes.
+                                                         Set to the same value as payload for single-region mode. */
+    bool fd_enable;                                 /*!< Enable/Disable the Flexible Data Rate feature. */
+#endif
+    ...
+} flexcan_user_config_t;
+```
+
+### 说明
+
+原始结构只有一个 `payload` 字段，两个 Region 使用相同的 payload 大小。修改后将 `payload` 拆分为 `region0_payload` 和 `region1_payload` 两个字段，用户可为每个 Region 独立配置不同的 payload 大小。
+
+---
+
+## 修改 2：`flexcan_driver.c` 驱动层调用
+
+### 位置
+
+`FLEXCAN_DRV_Init()`：`platform/drivers/src/flexcan/flexcan_driver.c` 第 985 行附近
+
+`FLEXCAN_DRV_GetDefaultConfig()`：同文件第 3490 行附近
+
+### 修改前（原始代码）
+
+```c
+/* FLEXCAN_DRV_Init 中 */
+FLEXCAN_SetPayloadSize(base, data->payload);
+
+/* FLEXCAN_DRV_GetDefaultConfig 中 */
+config->payload = FLEXCAN_PAYLOAD_SIZE_8;
+```
+
+### 修改后
+
+```c
+/* FLEXCAN_DRV_Init 中 */
+FLEXCAN_SetPayloadSize(base, data->region0_payload, data->region1_payload);
+
+/* FLEXCAN_DRV_GetDefaultConfig 中 */
+config->region0_payload = FLEXCAN_PAYLOAD_SIZE_8;
+config->region1_payload = FLEXCAN_PAYLOAD_SIZE_8;
+```
+
+### 说明
+
+驱动初始化时传递两个 Region 的 payload 参数。`GetDefaultConfig` 中将两个 Region 都初始化为 8B（安全默认值），用户根据实际需求覆盖。
+
+---
+
+## 修改 3：`flexcan_hw_access.h` 函数声明
+
+### 位置
+
+```
+platform/drivers/src/flexcan/flexcan_hw_access.h 第 575~595 行
+```
+
+### 修改前（原始代码）
+
+```c
+void FLEXCAN_SetPayloadSize(
+    CAN_Type * base,
+    flexcan_fd_payload_size_t payloadSize);
+
 uint8_t FLEXCAN_GetPayloadSize(const CAN_Type * base);
 ```
 
 ### 修改后
 
 ```c
+void FLEXCAN_SetPayloadSize(
+    CAN_Type * base,
+    flexcan_fd_payload_size_t region0Payload,
+    flexcan_fd_payload_size_t region1Payload);
+
 uint8_t FLEXCAN_GetPayloadSize(const CAN_Type * base, uint32_t msgBuffIdx);
 ```
 
 ### 说明
 
-原始函数只有一个参数（CAN 基地址），因为所有邮箱负载相同，只需要读 MBDSR0 即可。修改后增加 `msgBuffIdx` 参数，根据邮箱索引号判断该邮箱属于哪个 Region，返回对应的 payload 大小。
+- `FLEXCAN_SetPayloadSize` 从单参数改为双参数，分别指定 Region 0 和 Region 1 的 payload 大小。
+- `FLEXCAN_GetPayloadSize` 新增 `msgBuffIdx` 参数，根据邮箱索引判断该邮箱属于哪个 Region，返回对应的 payload 大小。
 
 ---
 
-## 修改 2：`FLEXCAN_GetPayloadSize` 函数体
+## 修改 4：新增 `FLEXCAN_GetRegion0MaxMbCount` / `FLEXCAN_GetRegion1MaxMbCount` 辅助函数
 
 ### 位置
 
 ```
 platform/drivers/src/flexcan/flexcan_hw_access.c
-原第 1996 行附近 → 修改后第 2024 行附近
+修改后第 375~393 行（两个函数均在 `FLEXCAN_GetMsgBuffRegion` 之前）
+```
+
+### 新增代码
+
+```c
+/*!
+ * @brief Computes how many MBs fit in Region 0's 512-byte block
+ *        based on the currently configured MBDSR0 payload size.
+ */
+static inline uint8_t FLEXCAN_GetRegion0MaxMbCount(const CAN_Type * base)
+{
+    uint32_t payloadSize = 1UL << (((base->FDCTRL & CAN_FDCTRL_MBDSR0_MASK)
+                                    >> CAN_FDCTRL_MBDSR0_SHIFT) + 3U);
+    return (uint8_t)(512U / (uint8_t)(payloadSize + 8U));
+}
+
+/*!
+ * @brief Computes how many MBs fit in Region 1's 512-byte block
+ *        based on the currently configured MBDSR1 payload size.
+ */
+static inline uint8_t FLEXCAN_GetRegion1MaxMbCount(const CAN_Type * base)
+{
+    uint32_t payloadSize = 1UL << (((base->FDCTRL & CAN_FDCTRL_MBDSR1_MASK)
+                                    >> CAN_FDCTRL_MBDSR1_SHIFT) + 3U);
+    return (uint8_t)(512U / (uint8_t)(payloadSize + 8U));
+}
+```
+
+### 说明
+
+这两个函数是**本次修改的核心基础设施**。它们根据 FDCTRL 寄存器中的 MBDSR0/MBDSR1 当前配置值，动态计算每个 512B RAM 块中能容纳的最大邮箱数量。
+
+- MB size = payload_size + 8 (仲裁字段固定 8 字节)
+- Max MB count = 512 / (payload_size + 8)，向下取整
+
+对于当前配置（Region0=16B, Region1=8B）：
+
+- Region 0: 512 / (16 + 8) = 512 / 24 = 21 MBs
+- Region 1: 512 / (8 + 8) = 512 / 16 = 32 MBs
+- **总计**：21 + 32 = **53 MBs**
+
+---
+
+## 修改 5：`FLEXCAN_GetPayloadSize` 函数体
+
+### 位置
+
+```
+platform/drivers/src/flexcan/flexcan_hw_access.c
+原第 2014 行附近 → 修改后第 2054 行附近
 ```
 
 ### 修改前（原始代码）
@@ -201,14 +346,12 @@ uint8_t FLEXCAN_GetPayloadSize(const CAN_Type * base)
 {
     uint32_t payloadSize;
 
-    /* The standard payload size is 8 bytes */
     if (!FLEXCAN_IsFDEnabled(base))
     {
         payloadSize = 8U;
     }
     else
     {
-        // 所有 MB 统一读 MBDSR0
         payloadSize = 1UL << (((base->FDCTRL & CAN_FDCTRL_MBDSR0_MASK)
                                >> CAN_FDCTRL_MBDSR0_SHIFT) + 3U);
     }
@@ -224,21 +367,17 @@ uint8_t FLEXCAN_GetPayloadSize(const CAN_Type * base, uint32_t msgBuffIdx)
 {
     uint32_t payloadSize;
 
-    /* The standard payload size is 8 bytes */
     if (!FLEXCAN_IsFDEnabled(base))
     {
         payloadSize = 8U;
     }
-    /* Region0 (MBDSR0) = MB 0~6 (64B), Region1 (MBDSR1) = MB 7+ (8B) */
-    else if (msgBuffIdx < 7)
+    else if (msgBuffIdx < FLEXCAN_GetRegion0MaxMbCount(base))
     {
-        // MB 0~6 → 读 MBDSR0
         payloadSize = 1UL << (((base->FDCTRL & CAN_FDCTRL_MBDSR0_MASK)
                                >> CAN_FDCTRL_MBDSR0_SHIFT) + 3U);
     }
     else
     {
-        // MB 7+ → 读 MBDSR1
         payloadSize = 1UL << (((base->FDCTRL & CAN_FDCTRL_MBDSR1_MASK)
                                >> CAN_FDCTRL_MBDSR1_SHIFT) + 3U);
     }
@@ -249,19 +388,21 @@ uint8_t FLEXCAN_GetPayloadSize(const CAN_Type * base, uint32_t msgBuffIdx)
 
 ### 说明
 
-- `msgBuffIdx < 7`：邮箱 0~6 属于 Region 0，读取 MBDSR0 寄存器
-- `msgBuffIdx >= 7`：邮箱 7+ 属于 Region 1，读取 MBDSR1 寄存器
-- 边界值 `7` 是根据 **7 个 64B 邮箱 = 504B** 刚好放入第一块 512B RAM 来确定的
+- 原始函数始终读取 MBDSR0，对双 Region 来说不准确。
+- 修改后通过 `msgBuffIdx < FLEXCAN_GetRegion0MaxMbCount(base)` 判断邮箱属于哪个 Region：
+  - 物理索引 0~20（`region0MaxMb - 1`） → 读取 MBDSR0 → 16B
+  - 物理索引 21+ → 读取 MBDSR1 → 8B
+- 边界值由 `FLEXCAN_GetRegion0MaxMbCount` 动态计算，与 payload 配置自动适配。
 
 ---
 
-## 修改 3：`FLEXCAN_GetMsgBuffRegion` 函数体
+## 修改 6：`FLEXCAN_GetMsgBuffRegion` 函数体 —— 双 Region 地址计算
 
 ### 位置
 
 ```
 platform/drivers/src/flexcan/flexcan_hw_access.c
-原第 370 行附近 → 修改后第 375 行附近
+原第 376 行附近 → 修改后第 399 行附近
 ```
 
 ### 修改前（原始代码）
@@ -272,7 +413,7 @@ volatile uint32_t* FLEXCAN_GetMsgBuffRegion(
         uint32_t msgBuffIdx)
 {
 #if FEATURE_CAN_HAS_FD
-    uint8_t payload_size = FLEXCAN_GetPayloadSize(base);  // ← 无 msgBuffIdx
+    uint8_t payload_size = FLEXCAN_GetPayloadSize(base);
 #else
     uint8_t payload_size = 8U;
 #endif
@@ -286,7 +427,6 @@ volatile uint32_t* FLEXCAN_GetMsgBuffRegion(
 
     ramBlockOffset = 128U * (msgBuffIdx / (uint32_t)maxMbNum);
 
-    /* Multiply the MB index by the MB size (in words) */
     uint32_t mb_index = ramBlockOffset
         + ((msgBuffIdx % (uint32_t)maxMbNum) * ((uint32_t)mb_size >> 2U));
 
@@ -302,7 +442,7 @@ volatile uint32_t* FLEXCAN_GetMsgBuffRegion(
         uint32_t msgBuffIdx)
 {
 #if FEATURE_CAN_HAS_FD
-    uint8_t payload_size = FLEXCAN_GetPayloadSize(base, msgBuffIdx);  // ← 加上 msgBuffIdx
+    uint8_t payload_size = FLEXCAN_GetPayloadSize(base, msgBuffIdx);
 #else
     uint8_t payload_size = 8U;
 #endif
@@ -310,20 +450,26 @@ volatile uint32_t* FLEXCAN_GetMsgBuffRegion(
     uint8_t arbitration_field_size = 8U;
     uint32_t mb_index;
 
-    if (msgBuffIdx < 7)
+#if FEATURE_CAN_HAS_FD
+    uint8_t region0MaxMb = FLEXCAN_GetRegion0MaxMbCount(base);
+
+    if (msgBuffIdx < region0MaxMb)
     {
-        /* Region0 (64B payload): MB 0~6, each 72B (18 words), all in block 0 */
+        /* Region 0: contiguous in block 0 */
         uint8_t mb_size = (uint8_t)(payload_size + arbitration_field_size);
         mb_index = msgBuffIdx * ((uint32_t)mb_size >> 2U);
     }
     else
     {
-        /* Region1 (8B payload): MB 7+, each 16B (4 words),
-           start from block 1 (RAM[128]) */
+        /* Region 1: start from block 1 (RAM[128]) */
         uint8_t mb_size = (uint8_t)(payload_size + arbitration_field_size);
-        uint32_t region1_idx = msgBuffIdx - 7U;
+        uint32_t region1_idx = msgBuffIdx - (uint32_t)region0MaxMb;
         mb_index = 128U + (region1_idx * ((uint32_t)mb_size >> 2U));
     }
+#else
+    uint8_t mb_size = (uint8_t)(payload_size + arbitration_field_size);
+    mb_index = msgBuffIdx * ((uint32_t)mb_size >> 2U);
+#endif
 
     return &(base->RAM[mb_index]);
 }
@@ -331,30 +477,34 @@ volatile uint32_t* FLEXCAN_GetMsgBuffRegion(
 
 ### 说明
 
-这是**最关键的一处修改**。原始代码假设所有 MB 大小相同，用统一的公式 `ramBlockOffset + offset` 计算物理地址。修改后分为两个 Region 独立计算：
+这是**最关键的一处修改**。原始代码假设所有 MB 大小相同，用统一的公式计算物理地址，Region 分界由 `maxMbNum = 512 / mb_size` 决定。
+
+修改后的计算方式：
 
 
-| Region | MB 范围 | Payload |    MB 大小    | 起始 RAM 偏移 |          布局方式          |
-| :----: | :-----: | :-----: | :------------: | :-----------: | :-------------------------: |
-|   R0   |   0~6   |   64B   | 72B (18 words) |    RAM[0]    |     `msgBuffIdx × 18`     |
-|   R1   |  7~38  |   8B   | 16B (4 words) |   RAM[128]   | `128 + (msgBuffIdx-7) × 4` |
+| Region | 物理 MB 范围 | Payload |    MB 大小    | 起始 RAM 偏移 |                 布局公式                 |
+| :----: | :----------: | :-----: | :-----------: | :-----------: | :--------------------------------------: |
+|   R0   |     0~20     |   16B   | 24B (6 words) |    RAM[0]    |            `msgBuffIdx × 6`            |
+|   R1   |    21~52    |   8B   | 16B (4 words) |   RAM[128]   | `128 + (msgBuffIdx - region0MaxMb) × 4` |
 
-**物理布局验证**：
+**物理布局验证（16B+8B 配置）**：
 
-- Region 0：7 × 18 = 126 words → RAM[0] ~ RAM[125] ✅
-- 间隙：RAM[126~127]（2 words，因 512 无法被 72 整除）
-- Region 1：32 × 4 = 128 words → RAM[128] ~ RAM[255] ✅
+- Region 0 RAM 占用：21 × 6 = 126 words → RAM[0] ~ RAM[125] ✅
+- 间隙：RAM[126~127]（2 words，因 512 无法被 24 整除，但不影响使用）
+- Region 1 RAM 占用：32 × 4 = 128 words → RAM[128] ~ RAM[255] ✅
 - **总计**：504 + 512 = **1016 bytes ≤ 1024 bytes** ✅
+
+> **注意**：`FLEXCAN_GetMsgBuffRegion` 先调用 `FLEXCAN_GetPayloadSize(base, msgBuffIdx)` 获取当前 MB 的 payload（Region 0 返回 16B，Region 1 返回 8B），然后根据 `region0MaxMb` 边界分别计算两个 Region 的物理地址。
 
 ---
 
-## 修改 4：`FLEXCAN_SetPayloadSize` 函数体
+## 修改 7：`FLEXCAN_SetPayloadSize` 函数体
 
 ### 位置
 
 ```
 platform/drivers/src/flexcan/flexcan_hw_access.c
-原第 1971 行附近 → 修改后第 1993 行附近
+原第 1978 行附近 → 修改后第 2017 行附近
 ```
 
 ### 修改前（原始代码）
@@ -372,10 +522,10 @@ void FLEXCAN_SetPayloadSize(
     {
         tmp = base->FDCTRL;
         tmp &= ~(CAN_FDCTRL_MBDSR0_MASK);
-        tmp |= ((uint32_t)payloadSize) << CAN_FDCTRL_MBDSR0_SHIFT;   // ← 相同值
+        tmp |= ((uint32_t)payloadSize) << CAN_FDCTRL_MBDSR0_SHIFT;
 #if FEATURE_CAN_HAS_MBDSR1
         tmp &= ~(CAN_FDCTRL_MBDSR1_MASK);
-        tmp |= ((uint32_t)payloadSize) << CAN_FDCTRL_MBDSR1_SHIFT;   // ← 相同值
+        tmp |= ((uint32_t)payloadSize) << CAN_FDCTRL_MBDSR1_SHIFT;
 #endif
 #if FEATURE_CAN_HAS_MBDSR2
         tmp &= ~(CAN_FDCTRL_MBDSR2_MASK);
@@ -391,20 +541,29 @@ void FLEXCAN_SetPayloadSize(
 ```c
 void FLEXCAN_SetPayloadSize(
     CAN_Type * base,
-    flexcan_fd_payload_size_t payloadSize)
+    flexcan_fd_payload_size_t region0Payload,
+    flexcan_fd_payload_size_t region1Payload)
 {
     uint32_t tmp;
 
-    DEV_ASSERT(FLEXCAN_IsFDEnabled(base) || (payloadSize == FLEXCAN_PAYLOAD_SIZE_8));
+    DEV_ASSERT(FLEXCAN_IsFDEnabled(base) || (region0Payload == FLEXCAN_PAYLOAD_SIZE_8));
 
     if (FLEXCAN_IsFDEnabled(base))
     {
         tmp = base->FDCTRL;
         tmp &= ~(CAN_FDCTRL_MBDSR0_MASK);
-        tmp |= ((uint32_t)FLEXCAN_PAYLOAD_SIZE_64) << CAN_FDCTRL_MBDSR0_SHIFT;  // ← 硬编码 64
+        tmp |= ((uint32_t)region0Payload) << CAN_FDCTRL_MBDSR0_SHIFT;
 #if FEATURE_CAN_HAS_MBDSR1
         tmp &= ~(CAN_FDCTRL_MBDSR1_MASK);
-        tmp |= ((uint32_t)FLEXCAN_PAYLOAD_SIZE_8) << CAN_FDCTRL_MBDSR1_SHIFT;   // ← 硬编码 8
+        tmp |= ((uint32_t)region1Payload) << CAN_FDCTRL_MBDSR1_SHIFT;
+#endif
+#if FEATURE_CAN_HAS_MBDSR2
+        tmp &= ~(CAN_FDCTRL_MBDSR2_MASK);
+        tmp |= ((uint32_t)region0Payload) << CAN_FDCTRL_MBDSR2_SHIFT;
+#endif
+#if defined (FEATURE_CAN_HAS_MBDSR3)&&(FEATURE_CAN_HAS_MBDSR3 == 1)
+        tmp &= ~(CAN_FDCTRL_MBDSR3_MASK);
+        tmp |= ((uint32_t)region0Payload) << CAN_FDCTRL_MBDSR3_SHIFT;
 #endif
         base->FDCTRL = tmp;
     }
@@ -413,72 +572,67 @@ void FLEXCAN_SetPayloadSize(
 
 ### 说明
 
-原始代码将同一个 `payloadSize` 写入所有 MBDSR 寄存器。修改后硬编码 **MBDSR0 = 64B**、**MBDSR1 = 8B**，参数 `payloadSize` 仅用于不存在的 MBDSR2/MBDSR3。
+原始代码将同一个 `payloadSize` 写入所有 MBDSR 寄存器。修改后：
 
-> ⚠️ 此处的硬编码意味着 `flexcanInitConfig.payload` 的值被忽略。如果需要更灵活的配置，可以将此函数改为接受两个 payload 参数，或通过其他方式传入两个不同的值。
+- 函数接受两个独立的 payload 参数：`region0Payload` 和 `region1Payload`
+- MBDSR0 写入 `region0Payload`（当前为 `FLEXCAN_PAYLOAD_SIZE_16`）
+- MBDSR1 写入 `region1Payload`（当前为 `FLEXCAN_PAYLOAD_SIZE_8`）
+- MBDSR2/MBDSR3（若存在）仍使用 `region0Payload`
 
 ---
 
-## 修改 5：`FLEXCAN_SetTxMsgBuff` 中的 assert
+## 修改 8：`FLEXCAN_SetTxMsgBuff` 中的 assert
 
 ### 位置
 
 ```
 platform/drivers/src/flexcan/flexcan_hw_access.c
-原第 597 行附近 → 修改后第 602 行附近
+原第 596 行附近 → 修改后第 629 行附近
 ```
 
 ### 修改前（原始代码）
 
 ```c
-/* Check if the Payload Size is smaller than the payload configured */
 DEV_ASSERT((uint8_t)cs->dataLen <= FLEXCAN_GetPayloadSize(base));
 ```
 
 ### 修改后
 
 ```c
-/* Check if the Payload Size is smaller than the payload configured */
 DEV_ASSERT((uint8_t)cs->dataLen <= FLEXCAN_GetPayloadSize(base, msgBuffIdx));
 ```
 
 ### 说明
 
-`FLEXCAN_GetPayloadSize` 函数签名从 1 个参数变成了 2 个参数，必须同步修改所有调用处。此处补充 `msgBuffIdx` 参数，确保 assert 检查的是当前 MB 所在 Region 的正确 payload 大小。
-
-> 同理，`FLEXCAN_GetMsgBuff` 函数中调用 `FLEXCAN_GetPayloadSize` 的地方也需要加上 `msgBuffIdx` 参数。
+`FLEXCAN_GetPayloadSize` 签名从 1 参数变为 2 参数。补充 `msgBuffIdx` 以确保检查当前 MB 所在 Region 的正确 payload 大小。
 
 ---
 
-## 修改 6：`FLEXCAN_GetMsgBuff` 中的调用
+## 修改 9：`FLEXCAN_GetMsgBuff` 中的调用
 
 ### 位置
 
 ```
 platform/drivers/src/flexcan/flexcan_hw_access.c
-原第 860 行附近 → 修改后第 872 行附近
+原第 867~869 行附近 → 修改后第 900~902 行附近
 ```
 
 ### 修改前（原始代码）
 
 ```c
-#if FEATURE_CAN_HAS_FD
-    if (payload_size > FLEXCAN_GetPayloadSize(base))
-    {
-        payload_size = FLEXCAN_GetPayloadSize(base);
-    }
-#endif
+if (payload_size > FLEXCAN_GetPayloadSize(base))
+{
+    payload_size = FLEXCAN_GetPayloadSize(base);
+}
 ```
 
 ### 修改后
 
 ```c
-#if FEATURE_CAN_HAS_FD
-    if (payload_size > FLEXCAN_GetPayloadSize(base, msgBuffIdx))
-    {
-        payload_size = FLEXCAN_GetPayloadSize(base, msgBuffIdx);
-    }
-#endif
+if (payload_size > FLEXCAN_GetPayloadSize(base, msgBuffIdx))
+{
+    payload_size = FLEXCAN_GetPayloadSize(base, msgBuffIdx);
+}
 ```
 
 ### 说明
@@ -487,13 +641,13 @@ platform/drivers/src/flexcan/flexcan_hw_access.c
 
 ---
 
-## 修改 7：`FLEXCAN_SetMaxMsgBuffNum`——端地址检查
+## 修改 10：`FLEXCAN_SetMaxMsgBuffNum` —— 端地址检查与总量上限
 
 ### 位置
 
 ```
 platform/drivers/src/flexcan/flexcan_hw_access.c
-原第 1076 行附近 → 修改后第 1088 行附近
+原第 1083 行附近 → 修改后第 1117 行附近
 ```
 
 ### 修改前（原始代码）
@@ -504,12 +658,7 @@ platform/drivers/src/flexcan/flexcan_hw_access.c
 #else
     uint8_t can_real_payload = 8U;
 #endif
-    status_t status = STATUS_SUCCESS;
-
-#if FEATURE_CAN_HAS_FD
-    uint8_t arbitration_field_size = 8U;
-    volatile uint32_t *valEndMbPointer = FLEXCAN_GetMsgBuffRegion(base, (maxMsgBuffNum - 1U));
-    uint32_t valEndMb = (uint32_t)valEndMbPointer + can_real_payload + arbitration_field_size;
+    ...
     if ((valEndMb > (uint32_t)&base->RAM[FEATURE_CAN_RAM_COUNT])
         || (maxMsgBuffNum > FLEXCAN_GetMaxMbNum(base)))
 ```
@@ -523,46 +672,52 @@ platform/drivers/src/flexcan/flexcan_hw_access.c
 #else
     uint8_t can_real_payload = 8U;
 #endif
-    status_t status = STATUS_SUCCESS;
-
-#if FEATURE_CAN_HAS_FD
-    uint8_t arbitration_field_size = 8U;
-    volatile uint32_t *valEndMbPointer = FLEXCAN_GetMsgBuffRegion(base, (maxMsgBuffNum - 1U));
-    uint32_t valEndMb = (uint32_t)valEndMbPointer + can_real_payload + arbitration_field_size;
+    ...
+    uint32_t totalMaxMb = (uint32_t)FLEXCAN_GetRegion0MaxMbCount(base)
+                        + (uint32_t)FLEXCAN_GetRegion1MaxMbCount(base);
     if ((valEndMb > (uint32_t)&base->RAM[FEATURE_CAN_RAM_COUNT])
-        || (maxMsgBuffNum > FLEXCAN_GetMaxMbNum(base)))
+        || (maxMsgBuffNum > FLEXCAN_GetMaxMbNum(base))
+        || (maxMsgBuffNum > totalMaxMb))
 ```
 
 ### 说明
 
-关键区别：
+两处关键改动：
 
-```c
-// 原始：从全局获取 payload（所有 MB 相同）
-uint8_t can_real_payload = FLEXCAN_GetPayloadSize(base);
+1. **从最后一个 MB 获取 payload**：
 
-// 修改后：从最后一个 MB 获取 payload（不同 Region 可能不同）
-msgBuffIdx = maxMsgBuffNum - 1U;
-uint8_t can_real_payload = FLEXCAN_GetPayloadSize(base, msgBuffIdx);
-```
+   ```c
+   // 原始：从 MB 0 的 Region 读取 payload（所有 MB 相同）
+   uint8_t can_real_payload = FLEXCAN_GetPayloadSize(base);
 
-**为什么必须修改？** 原始代码假设所有 MB 大小相同，从 MB 0 的 Region 读取 payload 值就可以代表所有 MB。但双 Region 布局下，最后一个 MB（如 MB 38）很可能在 Region 1（8B payload），如果仍然从 MB 0 取 payload（64B），会错误地算出最后一个 MB 占 64 字节 → 超界 → Init 失败。
+   // 修改后：从最后一个 MB 获取其所属 Region 的 payload
+   msgBuffIdx = maxMsgBuffNum - 1U;
+   uint8_t can_real_payload = FLEXCAN_GetPayloadSize(base, msgBuffIdx);
+   ```
+
+   原始代码假设所有 MB 大小相同，`can_real_payload` 从 MB 0（Region 0）取值。但双 Region 布局下，最后一个 MB 在 Region 1（8B payload），如果仍取 16B（Region 0 的值），会错误算出超界。
+2. **新增总量上限检查**：
+
+   ```c
+   || (maxMsgBuffNum > totalMaxMb)
+   ```
+
+   `totalMaxMb` = Region 0 最大 MB 数 + Region 1 最大 MB 数（当前为 21 + 32 = 53）。确保用户配置的 `max_num_mb` 不超过两个 512B RAM 块能容纳的总量。
 
 ---
 
-## 修改 8：`FLEXCAN_SetMaxMsgBuffNum`——初始化循环
+## 修改 11：`FLEXCAN_SetMaxMsgBuffNum` —— 初始化循环
 
 ### 位置
 
 ```
 platform/drivers/src/flexcan/flexcan_hw_access.c
-原第 1130 行附近 → 修改后第 1127 行附近
+原第 1125 行附近 → 修改后第 1161 行附近
 ```
 
 ### 修改前（原始代码）
 
 ```c
-/* Initialize all message buffers as inactive */
 for (msgBuffIdx = 0; msgBuffIdx < maxMsgBuffNum; msgBuffIdx++)
 {
     volatile uint32_t *flexcan_mb = FLEXCAN_GetMsgBuffRegion(base, msgBuffIdx);
@@ -581,7 +736,6 @@ for (msgBuffIdx = 0; msgBuffIdx < maxMsgBuffNum; msgBuffIdx++)
 ### 修改后
 
 ```c
-/* Initialize all message buffers as inactive */
 for (msgBuffIdx = 0; msgBuffIdx < maxMsgBuffNum; msgBuffIdx++)
 {
     volatile uint32_t *flexcan_mb = FLEXCAN_GetMsgBuffRegion(base, msgBuffIdx);
@@ -601,29 +755,38 @@ for (msgBuffIdx = 0; msgBuffIdx < maxMsgBuffNum; msgBuffIdx++)
 ### 说明
 
 
-| 修改点   | 原始                                                  | 修改后                                                           |
-| :------- | :---------------------------------------------------- | :--------------------------------------------------------------- |
-| 清零长度 | `can_real_payload`（固定值）                          | `FLEXCAN_GetPayloadSize(base, msgBuffIdx)`（每个 MB 按真实大小） |
-| 效果     | Region 0 MB 清 64B，Region 1 MB**也清 64B（越界！）** | Region 0 MB 清 64B，Region 1 MB 清 8B ✅                         |
+| 修改点   | 原始                                                                     | 修改后                                                                        |
+| :------- | :----------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| 清零长度 | `can_real_payload`（固定值，从 MB 0 的 Region 取值）                     | `mb_payload = FLEXCAN_GetPayloadSize(base, msgBuffIdx)`（每个 MB 按真实大小） |
+| 效果     | Region 0 MB 清零正确，Region 1 MB 也清零同样长度 →**越界写破坏相邻 MB** | Region 0 MB 清零 16B，Region 1 MB 清零 8B ✅                                  |
 
-原始代码中用 `can_real_payload`（一个固定值）去清零所有 MB 的数据区。在双 Region 布局中，Region 1 的 MB 只有 8B 数据区，却尝试写 64B → 写到下一个 MB 的仲裁区/数据区 → 数据破坏。
+原始代码循环中用同一个 `can_real_payload` 清零所有 MB 的数据区。双 Region 布局中 Region 1 的 MB 只有 8B 数据区，却写满 16B → 跨越 MB 边界 → 数据破坏。
 
 ---
 
-## 修改 9：`can_config.c`——邮箱数量
+## 修改 12：`can_config.c` —— 配置参数
 
 ### 位置
 
 ```
-board/can_config.c 第 22 行
+board/can_config.c 第 19~53 行
 ```
 
 ### 修改前（原始代码）
 
 ```c
 const flexcan_user_config_t flexcanInitConfig0 = {
-    .max_num_mb = 14UL,       // 14 个 64B 邮箱（2 × 512B 块）
+    .max_num_mb = 14UL,
     .payload = FLEXCAN_PAYLOAD_SIZE_64,
+    .fd_enable = true,
+    ...
+};
+
+flexcan_state_t flexcanInitConfig1_State;
+const flexcan_user_config_t flexcanInitConfig1 = {
+    .max_num_mb = 7UL,
+    .payload = FLEXCAN_PAYLOAD_SIZE_64,
+    .fd_enable = true,
     ...
 };
 ```
@@ -632,326 +795,87 @@ const flexcan_user_config_t flexcanInitConfig0 = {
 
 ```c
 const flexcan_user_config_t flexcanInitConfig0 = {
-    .max_num_mb = 39UL,       // 7 个 64B + 32 个 8B = 39 个邮箱
-    .payload = FLEXCAN_PAYLOAD_SIZE_8,
+    .max_num_mb = 53UL,
+    .region0_payload = FLEXCAN_PAYLOAD_SIZE_16,
+    .region1_payload = FLEXCAN_PAYLOAD_SIZE_8,
+    .fd_enable = true,
     ...
 };
+/* flexcanInitConfig1 已删除 */
 ```
 
 ### 说明
 
-- 原始：全部 64B 负载，1024 ÷ 72 = 14.2 → 最多 14 个邮箱
-- 修改后：Region0 有 7 个 64B（504B）+ Region1 有 32 个 8B（512B）= 39 个邮箱，总计 1016B
 
-> ⚠️ `payload = FLEXCAN_PAYLOAD_SIZE_8` 写什么值不重要，因为 `FLEXCAN_SetPayloadSize` 中硬编码了 64 和 8。
+| 参数              | 原始                 | 修改后                    | 含义                                         |
+| :---------------- | :------------------- | :------------------------ | :------------------------------------------- |
+| `max_num_mb`      | 14 (CAN0) + 7 (CAN1) | 53 (CAN0 only)            | Region 0 最多 21 + Region 1 最多 32 = 53 MBs |
+| `payload`         | 64B（统一值）        | —                        | 已废弃                                       |
+| `region0_payload` | —                   | `FLEXCAN_PAYLOAD_SIZE_16` | Region 0 每个 MB 的 payload                  |
+| `region1_payload` | —                   | `FLEXCAN_PAYLOAD_SIZE_8`  | Region 1 每个 MB 的 payload                  |
 
----
-
-## 修改 10：`main.c`——应用层邮箱分配
-
-### 说明
-
-原始 `main.c` 使用两个 CAN 实例（CAN0 和 CAN5），每个只用 2 个邮箱（1 收 1 发），全部 64B 负载。
-
-修改后 `main.c` 只用一个 CAN0 实例，使用 39 个邮箱。详细分配见[第一部分：邮箱总览](#邮箱总览)。
-
-关键点：
-
-- 64B 负载的 data_info 使用 `rxMbStdInfo0/rxMbExtInfo0/txMbStdInfo0/txMbExtInfo0`（`data_length = 64`）
-- 8B 负载的 data_info 使用 `rxMbStdInfo1/rxMbExtInfo1/txMbStdInfo1/txMbExtInfo1`（`data_length = 8`）
-- `data_length` **必须 ≤ 所在 Region 的 payload**
-- 收发操作中的 MB 索引必须与配置时一致
+- 原始代码配置了两个 CAN 实例（CAN0=实例0，CAN1=实例5），均使用 64B payload。
+- 修改后只使用 CAN0 单个实例，配置为 Region 0 = 16B、Region 1 = 8B 的双 Region 布局。
 
 ---
 
-## 修改总结
+## 修改 13：`main.c` —— 应用层
 
-|:--:|:---:|:---:|:------:|:------:|:------------:|
-| 0 | RX | 64B | STD | `0x100` | Region 0 (MBDSR0) |
-| 1 | RX | 64B | STD | `0x101` | Region 0 (MBDSR0) |
-| 2 | RX | 64B | EXT | `0x18DA00F1` | Region 0 (MBDSR0) |
-| 3 | TX | 64B | STD | `0x200` | Region 0 (MBDSR0) |
-| 4 | TX | 64B | STD | `0x201` | Region 0 (MBDSR0) |
-| 5 | TX | 64B | EXT | `0x1AABBCC` | Region 0 (MBDSR0) |
-| 6 | TX | 64B | EXT | `0x1AABBCD` | Region 0 (MBDSR0) |
-| 7 | RX | 8B | STD | `0x102` | Region 1 (MBDSR1) |
-| 8 | RX | 8B | STD | `0x103` | Region 1 (MBDSR1) |
-| 9 | RX | 8B | STD | `0x104` | Region 1 (MBDSR1) |
-| 10 | RX | 8B | STD | `0x105` | Region 1 (MBDSR1) |
-| 11 | RX | 8B | STD | `0x106` | Region 1 (MBDSR1) |
-| 12 | RX | 8B | STD | `0x107` | Region 1 (MBDSR1) |
-| 13 | RX | 8B | STD | `0x108` | Region 1 (MBDSR1) |
-| 14 | RX | 8B | STD | `0x109` | Region 1 (MBDSR1) |
-| 15 | RX | 8B | EXT | `0x18DA00F2` | Region 1 (MBDSR1) |
-| 16 | RX | 8B | EXT | `0x18DA00F3` | Region 1 (MBDSR1) |
-| 17 | RX | 8B | EXT | `0x18DA00F4` | Region 1 (MBDSR1) |
-| 18 | RX | 8B | EXT | `0x18DA00F5` | Region 1 (MBDSR1) |
-| 19 | RX | 8B | EXT | `0x18DA00F6` | Region 1 (MBDSR1) |
-| 20 | RX | 8B | EXT | `0x18DA00F7` | Region 1 (MBDSR1) |
-| 21 | RX | 8B | EXT | `0x18DA00F8` | Region 1 (MBDSR1) |
-| 22 | RX | 8B | EXT | `0x18DA00F9` | Region 1 (MBDSR1) |
-| 23 | TX | 8B | STD | `0x202` | Region 1 (MBDSR1) |
-| 24 | TX | 8B | STD | `0x203` | Region 1 (MBDSR1) |
-| 25 | TX | 8B | STD | `0x204` | Region 1 (MBDSR1) |
-| 26 | TX | 8B | STD | `0x205` | Region 1 (MBDSR1) |
-| 27 | TX | 8B | STD | `0x206` | Region 1 (MBDSR1) |
-| 28 | TX | 8B | STD | `0x207` | Region 1 (MBDSR1) |
-| 29 | TX | 8B | STD | `0x208` | Region 1 (MBDSR1) |
-| 30 | TX | 8B | STD | `0x209` | Region 1 (MBDSR1) |
-| 31 | TX | 8B | EXT | `0x1AABBCE` | Region 1 (MBDSR1) |
-| 32 | TX | 8B | EXT | `0x1AABBCF` | Region 1 (MBDSR1) |
-| 33 | TX | 8B | EXT | `0x1AABBD0` | Region 1 (MBDSR1) |
-| 34 | TX | 8B | EXT | `0x1AABBD1` | Region 1 (MBDSR1) |
-| 35 | TX | 8B | EXT | `0x1AABBD2` | Region 1 (MBDSR1) |
-| 36 | TX | 8B | EXT | `0x1AABBD3` | Region 1 (MBDSR1) |
-| 37 | TX | 8B | EXT | `0x1AABBD4` | Region 1 (MBDSR1) |
-| 38 | TX | 8B | EXT | `0x1AABBD5` | Region 1 (MBDSR1) |
+### 位置
 
-### ID 计算公式
+```
+app/main.c
+```
 
-代码中通过以下宏定义和循环公式生成每个 MB 的 CAN ID：
+### 修改概述
+
+原始 `main.c` 是一个双 CAN 实例（CAN0 + CAN5）互相收发 64B FD 帧的环形测试。修改后的 `main.c` 围绕单个 CAN0 实例，使用 39 个邮箱（逻辑 0~38）分布在两个 Region 中：
+
+- **16B 负载组**：MB 0~6（物理），包含 3 个 RX + 4 个 TX
+- **8B 负载组**：MB 21~52（物理），包含 16 个 RX + 16 个 TX
+
+核心代码变更：
 
 ```c
-#define RX_MSG_ID1 (0x100U)        // 标准帧 RX 基准 ID
-#define TX_MSG_ID1 (0x200U)        // 标准帧 TX 基准 ID
-#define RX_MSG_ID2 (0x18DA00F1)    // 扩展帧 RX 基准 ID
-#define TX_MSG_ID2 (0x1AABBCC)     // 扩展帧 TX 基准 ID
+// 16B payload 配置
+const flexcan_data_info_t rxMbStdInfo0 = {
+    .data_length = 16,     // 原始为 64
+    .fd_enable = true,
+    .enable_brs = true,
+    ...
+};
+
+// 8B payload 配置
+const flexcan_data_info_t rxMbStdInfo1 = {
+    .data_length = 8,
+    .fd_enable = true,
+    .enable_brs = true,
+    ...
+};
+
+// Region 1 邮箱从物理索引 21 开始
+for(int i = 0; i < 8; i++)
+{
+    status |= FLEXCAN_DRV_ConfigRxMb(CAN0_INST, 21+i, &rxMbStdInfo1, RX_MSG_ID1+2+i);
+}
 ```
 
-- 64B RX MB 0~2：直接使用 `RX_MSG_ID1`, `RX_MSG_ID1+1`, `RX_MSG_ID2`
-- 64B TX MB 3~6：直接使用 `TX_MSG_ID1`, `TX_MSG_ID1+1`, `TX_MSG_ID2`, `TX_MSG_ID2+1`
-- 8B RX STD MB 7~14：`RX_MSG_ID1 + 2 + i`，i=0~7
-- 8B RX EXT MB 15~22：`RX_MSG_ID2 + 1 + i`，i=0~7
-- 8B TX STD MB 23~30：`TX_MSG_ID1 + i + 2`，i=0~7
-- 8B TX EXT MB 31~38：`TX_MSG_ID2 + i + 2`，i=0~7
-
-### 收发对应关系
-
-
-| 发送 MB |   发送 ID   | 数据长度 | 期望接收 MB |   接收 ID   | 接收数据长度 |
-| :-----: | :---------: | :------: | :---------: | :----------: | :----------: |
-|    3    |   `0x200`   |   64B   |      0      |   `0x100`   |     64B     |
-|    4    |   `0x201`   |   64B   |      1      |   `0x101`   |     64B     |
-|    5    | `0x1AABBCC` |   64B   |      2      | `0x18DA00F1` |     64B     |
-|    6    | `0x1AABBCD` |   64B   |     —     |      —      |      —      |
-|   23   |   `0x202`   |    8B    |      7      |   `0x102`   |      8B      |
-|   24   |   `0x203`   |    8B    |      8      |   `0x103`   |      8B      |
-|   25   |   `0x204`   |    8B    |      9      |   `0x104`   |      8B      |
-|   26   |   `0x205`   |    8B    |     10     |   `0x105`   |      8B      |
-|   27   |   `0x206`   |    8B    |     11     |   `0x106`   |      8B      |
-|   28   |   `0x207`   |    8B    |     12     |   `0x107`   |      8B      |
-|   29   |   `0x208`   |    8B    |     13     |   `0x108`   |      8B      |
-|   30   |   `0x209`   |    8B    |     14     |   `0x109`   |      8B      |
-|   31   | `0x1AABBCE` |    8B    |     15     | `0x18DA00F2` |      8B      |
-|   32   | `0x1AABBCF` |    8B    |     16     | `0x18DA00F3` |      8B      |
-|   33   | `0x1AABBD0` |    8B    |     17     | `0x18DA00F4` |      8B      |
-|   34   | `0x1AABBD1` |    8B    |     18     | `0x18DA00F5` |      8B      |
-|   35   | `0x1AABBD2` |    8B    |     19     | `0x18DA00F6` |      8B      |
-|   36   | `0x1AABBD3` |    8B    |     20     | `0x18DA00F7` |      8B      |
-|   37   | `0x1AABBD4` |    8B    |     21     | `0x18DA00F8` |      8B      |
-|   38   | `0x1AABBD5` |    8B    |     22     | `0x18DA00F9` |      8B      |
-
-> ⚠️ 注意：当前代码中**发送和接收使用的 ID 不同**（例如 TX 发 `0x200`，RX 收 `0x100`），这适用于两个 CAN 节点通过外部接线互联的场景。做单节点自回环测试时，需要确保 TX ID 和 RX ID 匹配，或者使用另一个 CAN 节点作为对端来收发对应 ID。
+> ⚠️ **关键点**：应用层给 Region 1 的邮箱分配的是**物理 MB 索引 21~52**，而不是紧凑地从 7 开始。这是因为 Region 0 的 `FLEXCAN_PAYLOAD_SIZE_16` 配置使得硬件分界在 MB 21（0~20 为 Region 0，21~52 为 Region 1）。MB 7~20 虽然也在 Region 0，但应用层不使用它们。
 
 ---
 
-## 代码使用介绍
+## 修改完成检查清单
 
-### 运行环境说明
-
-本演示代码运行在 **YTM32B1ME0** 芯片的单个 CAN 实例（CAN0）上，配置了 39 个邮箱，涵盖了标准的 CAN FD 数据帧收发操作。
-
-### 硬件连接方式
-
-**双节点互联测试（推荐）：**
-
-将两块 EVB 板的 CAN_H 和 CAN_L 对接：
-
-```
-EVB-A CAN0               EVB-B CAN5
-CAN_H ──────────────────── CAN_H
-CAN_L ──────────────────── CAN_L
-```
-
-- EVB-A 烧录本工程代码，CAN0 发送 `0x200` 等 ID，CAN5 接收 `0x100` 等 ID
-- EVB-B 烧录配套代码，CAN5 接收 `0x100` 等 ID，发送 `0x200` 等 ID
-
-**单板自回环测试：**
-
-将同一块 EVB 板的 CAN0 与 CAN5 短接：
-
-```
-CAN0 CAN_H ──── CAN5 CAN_H
-CAN0 CAN_L ──── CAN5 CAN_L
-```
-
-### 邮箱分组说明
-
-代码中 39 个邮箱分为 **3 大组**，每组功能如下：
-
-#### 第一组：64 字节负载邮箱（MB 0~6，位于 Region 0）
-
-
-| MB | 功能 | 说明                                          |
-| :-: | :--- | :-------------------------------------------- |
-| 0 | RX   | 接收 64 字节 CAN FD 标准帧（ID=`0x100`）      |
-| 1 | RX   | 接收 64 字节 CAN FD 标准帧（ID=`0x101`）      |
-| 2 | RX   | 接收 64 字节 CAN FD 扩展帧（ID=`0x18DA00F1`） |
-| 3 | TX   | 发送 64 字节 CAN FD 标准帧（ID=`0x200`）      |
-| 4 | TX   | 发送 64 字节 CAN FD 标准帧（ID=`0x201`）      |
-| 5 | TX   | 发送 64 字节 CAN FD 扩展帧（ID=`0x1AABBCC`）  |
-| 6 | TX   | 发送 64 字节 CAN FD 扩展帧（ID=`0x1AABBCD`）  |
-
-**数据内容**：64 字节依次递增，例如发送时 `data[0] = offset1, data[1] = offset1+1, ...`
-
-#### 第二组：8 字节 RX 邮箱（MB 7~22，位于 Region 1）
-
-
-| MB 范围 | 帧类型 |           ID 范围           | 说明               |
-| :-----: | :----: | :-------------------------: | :----------------- |
-|  7~14  | 标准帧 |      `0x102` ~ `0x109`      | 8 字节 CAN FD 接收 |
-|  15~22  | 扩展帧 | `0x18DA00F2` ~ `0x18DA00F9` | 8 字节 CAN FD 接收 |
-
-#### 第三组：8 字节 TX 邮箱（MB 23~38，位于 Region 1）
-
-
-| MB 范围 | 帧类型 |          ID 范围          | 说明               |
-| :-----: | :----: | :-----------------------: | :----------------- |
-|  23~30  | 标准帧 |     `0x202` ~ `0x209`     | 8 字节 CAN FD 发送 |
-|  31~38  | 扩展帧 | `0x1AABBCE` ~ `0x1AABBD5` | 8 字节 CAN FD 发送 |
-
-**数据内容**：8 字节，与 64B 邮箱共用 `txMsg0` 的前 8 字节数据。
-
-### 程序运行流程
-
-```
-1. Board_Init()
-   ├─ 初始化系统时钟
-   ├─ 初始化引脚复用
-   └─ FLEXCAN_DRV_Init(CAN0) → Region0=64B, Region1=8B, 39个MB
-
-2. 注册中断回调 FLEXCAN_DRV_InstallEventCallback()
-   └─ 收到帧后自动调用 Can0Tp_Hal_EventCallback
-      └─ RX COMPLETE → can0_rx_flag++ → 自动重新 arm RX
-
-3. 配置邮箱
-   ├─ MB 0~2:  ConfigRxMb (64B)
-   ├─ MB 3~6:  ConfigTxMb (64B)
-   ├─ MB 7~14: ConfigRxMb (8B)
-   ├─ MB 15~22:ConfigRxMb (8B)
-   ├─ MB 23~30:ConfigTxMb (8B)
-   └─ MB 31~38:ConfigTxMb (8B)
-
-4. 启动接收
-   ├─ MB 0~2:  FLEXCAN_DRV_Receive
-   └─ MB 7~22: FLEXCAN_DRV_Receive
-
-5. while(1) 主循环
-   ├─ 检查 MB 3~6  状态 → 空闲则 Send 64B 数据
-   ├─ 检查 MB 23~30 状态 → 空闲则 Send 8B 数据
-   ├─ 检查 MB 31~38 状态 → 空闲则 Send 8B 数据
-   └─ OSIF_TimeDelay(10) → 延时 10ms，避免总线堵塞
-```
-
-### 接收回调说明
-
-代码中注册了 CAN FD 事件回调函数 `Can0Tp_Hal_EventCallback`：
-
-```c
-FLEXCAN_DRV_InstallEventCallback(0, Can0Tp_Hal_EventCallback, NULL);
-```
-
-- **RX COMPLETE** 事件触发时：`can0_rx_flag++`，然后自动调用 `FLEXCAN_DRV_Receive` 重新 arm 该 MB 接收下一帧
-- **TX COMPLETE** 事件触发时：不做额外处理，由 while 循环中的 `GetTransferStatus` 检测状态变更
-- 回调中的 `mbIdx` 参数可用于区分是哪个 MB 完成了收发
-
-### CAN FD 关键参数
-
-
-| 参数            |          值          | 说明                                                    |
-| :-------------- | :------------------: | :------------------------------------------------------ |
-| 仲裁段波特率    |   由`bitrate` 配置   | `.propSeg=4, .phaseSeg1=7, .phaseSeg2=1, .preDivider=2` |
-| 数据段波特率    | 由`bitrate_cbt` 配置 | `.propSeg=6, .phaseSeg1=2, .phaseSeg2=1, .preDivider=0` |
-| FD 模式         |         开启         | `.fd_enable = true`                                     |
-| BRS（速率切换） |         开启         | `.enable_brs = true`，数据段使用更高速率                |
-| 发送填充值      |          0          | `.fd_padding = 0`                                       |
-
-### 数据流示例
-
-假设正常运行，CAN0 发送一帧 64B 标准帧到对端 CAN5：
-
-```
-CAN0 MB3 发送:
-   ID    = 0x200
-   DLC   = 15 (对应 64 字节)
-   Data  = [0x01, 0x02, ..., 0x40]  (offset1=1 时)
-   BRS   = 1 (数据段切换到高速率)
-   IDE   = 0 (标准帧)
-
-CAN5 MB0 接收:
-   ID    = 0x200
-   DLC   = 15
-   Data  = [0x01, 0x02, ..., 0x40]
-   接收成功后：rx_flag_can5++，自动 re-arm 等待下一帧
-```
-
----
-
-## 修改总结
-
-
-| # | 文件                  | 函数/位置                             | 修改类型 | 关键变更                                               |
-| :-: | :-------------------- | :------------------------------------ | :------- | :----------------------------------------------------- |
-| 1 | `flexcan_hw_access.h` | `FLEXCAN_GetPayloadSize` 声明         | 签名变更 | 增加`msgBuffIdx` 参数                                  |
-| 2 | `flexcan_hw_access.c` | `FLEXCAN_GetPayloadSize` 定义         | 逻辑变更 | 根据`msgBuffIdx` 选择读 MBDSR0 还是 MBDSR1             |
-| 3 | `flexcan_hw_access.c` | `FLEXCAN_GetMsgBuffRegion`            | 逻辑重写 | 两段式物理地址映射，替代统一公式                       |
-| 4 | `flexcan_hw_access.c` | `FLEXCAN_SetPayloadSize`              | 逻辑变更 | MBDSR0 硬编码 64、MBDSR1 硬编码 8                      |
-| 5 | `flexcan_hw_access.c` | `FLEXCAN_SetTxMsgBuff` assert         | 参数补齐 | `FLEXCAN_GetPayloadSize(base)` → `(base, msgBuffIdx)` |
-| 6 | `flexcan_hw_access.c` | `FLEXCAN_GetMsgBuff`                  | 参数补齐 | 同上                                                   |
-| 7 | `flexcan_hw_access.c` | `FLEXCAN_SetMaxMsgBuffNum` 端地址检查 | 逻辑变更 | 从最后一个 MB 获取 payload                             |
-| 8 | `flexcan_hw_access.c` | `FLEXCAN_SetMaxMsgBuffNum` 初始化循环 | 逻辑变更 | 每个 MB 按真实 payload 大小清零                        |
-| 9 | `can_config.c`        | `flexcanInitConfig0`                  | 参数变更 | `max_num_mb = 39`                                      |
-| 10 | `main.c`              | 邮箱配置和收发循环                    | 逻辑重写 | 64B MB 在 0~6，8B MB 在 7~38                           |
-
----
-
-## 物理 RAM 布局验证
-
-```
-FlexCAN RAM 总大小：1024 bytes (256 words)
-
-┌──────────────────────────────────────────┐
-│  Region 0: 7 个 64B 邮箱（504B）          │
-│  MB 0: RAM[0~17]    (72B)               │
-│  MB 1: RAM[18~35]   (72B)               │
-│  MB 2: RAM[36~53]   (72B)               │
-│  MB 3: RAM[54~71]   (72B)               │
-│  MB 4: RAM[72~89]   (72B)               │
-│  MB 5: RAM[90~107]  (72B)               │
-│  MB 6: RAM[108~125] (72B)               │
-├──────────────────────────────────────────┤
-│  间隙: RAM[126~127] (8B)      ← 浪费     │
-├══════════════════════════════════════════┤
-│  Region 1: 32 个 8B 邮箱（512B）         │
-│  MB 7:  RAM[128~131] (16B)              │
-│  MB 8:  RAM[132~135] (16B)              │
-│  ...                                     │
-│  MB 38: RAM[252~255] (16B)              │
-├══════════════════════════════════════════┤
-│  总计: 504 + 512 = 1016B                 │
-│  剩余: 8B（RAM[126~127] 间隙）            │
-└──────────────────────────────────────────┘
-```
-
----
-
-## 注意事项
-
-1. **API 签名变更**：`FLEXCAN_GetPayloadSize` 从 1 参数变为 2 参数，所有调用处必须同步修改，否则编译失败
-2. **data_length 约束**：每个 MB 的 `flexcan_data_info_t.data_length` 不能超过其所在 Region 的 payload 大小（底层有 `DEV_ASSERT` 检查）
-3. **payload 硬编码**：当前 MBDSR0/MBDSR1 在 `FLEXCAN_SetPayloadSize` 中写死为 64/8，`flexcanInitConfig.payload` 的值被忽略
-4. **边界常量**：如果调整 64B 邮箱数量，需要同步修改 3 处边界条件：
-   - `FLEXCAN_GetPayloadSize` 中的 `msgBuffIdx < 7`
-   - `FLEXCAN_GetMsgBuffRegion` 中的 `msgBuffIdx < 7` 和 Region1 起始偏移 `128U`
-   - `can_config.c` 中的 `max_num_mb`
-5. **编译验证**：修改后务必确保 0 个编译诊断错误
+1. **`flexcan_driver.h`**：`flexcan_user_config_t` 中 `payload` 字段拆分为 `region0_payload` + `region1_payload`
+2. **`flexcan_driver.c`**：`FLEXCAN_DRV_Init` 和 `FLEXCAN_DRV_GetDefaultConfig` 使用新的双字段
+3. **`flexcan_hw_access.h`**：`FLEXCAN_SetPayloadSize` 和 `FLEXCAN_GetPayloadSize` 签名修改
+4. **`flexcan_hw_access.c`**：
+   - 新增 `FLEXCAN_GetRegion0MaxMbCount` / `FLEXCAN_GetRegion1MaxMbCount` 辅助函数
+   - `FLEXCAN_SetPayloadSize` 接受两个独立 payload 参数
+   - `FLEXCAN_GetPayloadSize` 按 MB 索引返回对应 Region 的 payload
+   - `FLEXCAN_GetMsgBuffRegion` 使用动态边界分 Region 计算物理地址
+   - `FLEXCAN_SetTxMsgBuff` assert 使用 `msgBuffIdx`
+   - `FLEXCAN_GetMsgBuff` 两处 `GetPayloadSize` 调用使用 `msgBuffIdx`
+   - `FLEXCAN_SetMaxMsgBuffNum` 端地址检查 + totalMaxMb 上限 + 初始化循环按 MB 独立获取 payload
+5. **`can_config.c`**：使用新字段，更新 max_num_mb 和 payload 配置
+6. **`main.c`**：应用层适配双 Region 物理布局

@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <fileVersion>5</fileVersion>
+    <fileChecksum>3624163509</fileChecksum>
+    <configuration>
+        <name>FLASH</name>
+        <outputs>
+            <file>$PROJ_DIR$\..\platform\drivers\src\linflexd\linflexd_hw_access.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\flexcan\flexcan_hw_access.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\inc\pins_driver.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\inc\dma_driver.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\inc\linflexd_lin_driver.h</file>
+            <file>$PROJ_DIR$\..\platform\devices\YTM32B1ME0\startup\system_YTM32B1ME0.c</file>
+            <file>$PROJ_DIR$\..\platform\devices\YTM32B1ME0\startup\system_YTM32B1ME0.h</file>
+            <file>$PROJ_DIR$\..\platform\devices\callbacks.h</file>
+            <file>$PROJ_DIR$\..\platform\devices\devassert.h</file>
+            <file>$PROJ_DIR$\..\platform\devices\device_registers.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\clock\YTM32B1Mx\scu_hw_access.h</file>
+            <file>$PROJ_DIR$\..\platform\devices\status.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\inc\linflexd_uart_driver.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\flexcan\flexcan_hw_access.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\inc\interrupt_manager.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\dma\dma_irq.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\linflexd\linflexd_uart_irq.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\flexcan\flexcan_irq.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\clock\YTM32B1Mx\ipc_hw_access.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\dma\dma_hw_access.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\inc\clock_manager.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\pins\pins_gpio_hw_access.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\pins\pins_port_hw_access.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\linflexd\linflexd_uart_irq.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\dma\dma_hw_access.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\inc\flexcan_driver.h</file>
+            <file>$PROJ_DIR$\..\platform\devices\YTM32B1ME0\include\YTM32B1ME0_features.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\interrupt\interrupt_manager.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\flexcan\flexcan_irq.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\flexcan\flexcan_driver.c</file>
+            <file>$PROJ_DIR$\..\platform\devices\common\core_common.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\dma\dma_driver.c</file>
+            <file>$PROJ_DIR$\..\platform\devices\YTM32B1ME0\include\YTM32B1ME0.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\pins\pins_port_hw_access.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\dma\dma_irq.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\linflexd\linflexd_uart_driver.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\inc\clock.h</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\pins\pins_driver.c</file>
+            <file>$PROJ_DIR$\..\CMSIS\Core\Include\cmsis_version.h</file>
+            <file>$PROJ_DIR$\..\middleware\utility_print\printf\printf.c</file>
+            <file>$PROJ_DIR$\..\CMSIS\Core\Include\cmsis_iccarm.h</file>
+            <file>$PROJ_DIR$\..\rtos\osif\osif.h</file>
+            <file>$PROJ_DIR$\..\CMSIS\Core\Include\core_cm33.h</file>
+            <file>$PROJ_DIR$\..\CMSIS\Core\Include\mpu_armv8.h</file>
+            <file>$PROJ_DIR$\..\rtos\osif\osif_baremetal.c</file>
+            <file>$PROJ_DIR$\..\middleware\utility_print\printf\printf.h</file>
+            <file>$PROJ_DIR$\..\CMSIS\Core\Include\cmsis_compiler.h</file>
+            <file>$PROJ_DIR$\..\board\clock_config.c</file>
+            <file>$PROJ_DIR$\..\board\clock_config.h</file>
+            <file>$PROJ_DIR$\..\app\main.c</file>
+            <file>$PROJ_DIR$\..\board\pin_mux.c</file>
+            <file>$PROJ_DIR$\..\board\pin_mux.h</file>
+            <file>$PROJ_DIR$\..\board\vector_table_copy.c</file>
+            <file>$PROJ_DIR$\..\board\linflexd_uart_config.h</file>
+            <file>$PROJ_DIR$\..\board\interrupt_config.h</file>
+            <file>$PROJ_DIR$\..\board\can_config.h</file>
+            <file>$PROJ_DIR$\..\board\RamInit0.S</file>
+            <file>$PROJ_DIR$\..\board\sdk_project_config.h</file>
+            <file>$PROJ_DIR$\..\board\vector.S</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\clock\YTM32B1Mx\clock_YTM32B1Mx.c</file>
+            <file>$PROJ_DIR$\..\platform\drivers\src\clock\YTM32B1Mx\clock_YTM32B1Mx.h</file>
+            <file>$PROJ_DIR$\..\board\dma_config.h</file>
+            <file>$PROJ_DIR$\..\board\startup.S</file>
+            <file>$PROJ_DIR$\..\board\yt_linker.icf</file>
+            <file>$PROJ_DIR$\..\board\RamInit2.c</file>
+            <file>$PROJ_DIR$\..\board\interrupt_config.c</file>
+            <file>$PROJ_DIR$\..\board\dma_config.c</file>
+            <file>$PROJ_DIR$\..\board\can_config.c</file>
+            <file>$PROJ_DIR$\..\board\linflexd_uart_config.c</file>
+            <file>$PROJ_DIR$\..\board\utility_print_config.h</file>
+            <file>$PROJ_DIR$\..\board\utility_print_config.c</file>
+            <file>$PROJ_DIR$\..\board\RamInit1.c</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\flexcan\flexcan_hw_access.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\app\main.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\flexcan\flexcan_irq.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\interrupt\interrupt_manager.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\linflexd\linflexd_uart_driver.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\interrupt_config.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\linflexd\linflexd_uart_irq.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\rtos\osif\osif_baremetal.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\RamInit0.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\dma\dma_irq.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\dma\dma_driver.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\dma\dma_hw_access.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\pins\pins_port_hw_access.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\startup.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\dma_config.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\pins\pins_driver.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\vector.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\middleware\utility_print\printf\printf.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\linflexd_uart_config.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\clock_config.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\pin_mux.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\RamInit2.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\utility_print_config.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\RamInit1.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\clock\YTM32B1Mx\clock_YTM32B1Mx.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\devices\YTM32B1ME0\startup\system_YTM32B1ME0.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\can_config.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\vector_table_copy.o</file>
+            <file>$PROJ_DIR$\FLASH\Obj\platform\drivers\src\flexcan\flexcan_driver.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\aarch32\iccarm_builtin.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdarg.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\float.h</file>
+            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+            <file>$PROJ_DIR$\FLASH\List\Flexcan_Canfd_Demo.map</file>
+            <file>$TOOLKIT_DIR$\lib\m7M_tls.a</file>
+            <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\startup.o.rsp</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\vector.o.rsp</file>
+            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+            <file>$PROJ_DIR$\FLASH\Exe\Flexcan_Canfd_Demo.out</file>
+            <file>$PROJ_DIR$\FLASH\Exe\Flexcan_Canfd_Demo.hex</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+            <file>$PROJ_DIR$\FLASH\Obj\board\RamInit0.o.rsp</file>
+        </outputs>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\flexcan\flexcan_hw_access.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 72</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 3 25 14 13 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\devices\YTM32B1ME0\startup\system_YTM32B1ME0.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 97</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\dma\dma_irq.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 81</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 3 24 34</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\linflexd\linflexd_uart_irq.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 78</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 7 30 8 9 11 36 20 3 14 4 12 60 0 23 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\flexcan\flexcan_irq.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 74</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 3 25 13 28 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\dma\dma_hw_access.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 83</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 3 14 24</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\pins\pins_port_hw_access.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 84</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 2 21 33</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\interrupt\interrupt_manager.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 75</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 14</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\flexcan\flexcan_driver.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 100</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 36 20 3 25 14 60 13 28 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\dma\dma_driver.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 82</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 36 20 3 14 60 24 34</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\linflexd\linflexd_uart_driver.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 76</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 7 30 8 9 11 36 20 3 14 4 12 60 0 23 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\pins\pins_driver.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 87</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 2 21 33</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\middleware\utility_print\printf\printf.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 89</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 111 110 103 101 108 104 105 106 69 45 11</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\rtos\osif\osif_baremetal.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 79</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 36 20 14 60 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\clock_config.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 91</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 48 32 26 6 30 8 9 11 36 60</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\app\main.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 73</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 110 103 101 108 104 105 106 46 40 38 42 43 55 48 61 54 53 51 57 69 45 32 26 6 7 30 8 9 11 36 20 3 25 14 12 2 60 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\pin_mux.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 92</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 51 32 26 6 30 8 9 11 2</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\vector_table_copy.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 99</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\RamInit0.S</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 80</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 122</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\vector.S</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 88</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 117</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\platform\drivers\src\clock\YTM32B1Mx\clock_YTM32B1Mx.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 96</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9 11 36 14 60 18 10</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\startup.S</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 85</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 116</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\RamInit2.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 93</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\interrupt_config.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 77</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 54 32 26 6 30 8 9 14</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\dma_config.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 86</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 61 32 26 6 30 8 9 11 3</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\can_config.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 98</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 55 32 26 6 30 8 9 11 3 25 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\linflexd_uart_config.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 90</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 53 32 26 6 7 30 8 9 11 36 20 3 14 12 60 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\utility_print_config.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 94</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 110 103 101 108 104 105 106 46 40 38 42 43 53 69 45 32 26 6 7 30 8 9 11 36 20 3 14 12 60 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board\RamInit1.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 95</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 109 107 102 103 101 108 104 105 106 46 40 38 42 43 32 26 6 30 8 9</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 119 113</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\FLASH\Exe\Flexcan_Canfd_Demo.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 113</file>
+                </tool>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 120</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 115 114 112 118 63 73 80 95 93 98 91 86 77 90 92 85 94 88 99 89 97 96 82 83 81 100 72 74 75 76 78 87 84 79</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\FLASH\Exe\Flexcan_Canfd_Demo.hex</name>
+            <inputs>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 119</file>
+                </tool>
+            </inputs>
+        </file>
+    </configuration>
+</project>

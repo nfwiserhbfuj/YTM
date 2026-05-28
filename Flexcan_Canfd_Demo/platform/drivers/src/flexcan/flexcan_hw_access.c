@@ -368,6 +368,28 @@ static void FLEXCAN_ClearRAM(CAN_Type * base)
  * Code
  ******************************************************************************/
 
+#if FEATURE_CAN_HAS_FD
+/*!
+ * @brief Computes how many MBs fit in Region 0's 512-byte block
+ *        based on the currently configured MBDSR0 payload size.
+ */
+static inline uint8_t FLEXCAN_GetRegion0MaxMbCount(const CAN_Type * base)
+{
+    uint32_t payloadSize = 1UL << (((base->FDCTRL & CAN_FDCTRL_MBDSR0_MASK) >> CAN_FDCTRL_MBDSR0_SHIFT) + 3U);
+    return (uint8_t)(512U / (uint8_t)(payloadSize + 8U));
+}
+
+/*!
+ * @brief Computes how many MBs fit in Region 1's 512-byte block
+ *        based on the currently configured MBDSR1 payload size.
+ */
+static inline uint8_t FLEXCAN_GetRegion1MaxMbCount(const CAN_Type * base)
+{
+    uint32_t payloadSize = 1UL << (((base->FDCTRL & CAN_FDCTRL_MBDSR1_MASK) >> CAN_FDCTRL_MBDSR1_SHIFT) + 3U);
+    return (uint8_t)(512U / (uint8_t)(payloadSize + 8U));
+}
+#endif /* FEATURE_CAN_HAS_FD */
+
 /*FUNCTION**********************************************************************
  *
  * Function Name : FLEXCAN_GetMsgBuffRegion
@@ -387,19 +409,24 @@ volatile uint32_t* FLEXCAN_GetMsgBuffRegion(
     uint8_t arbitration_field_size = 8U;
     uint32_t mb_index;
 
-    if (msgBuffIdx < 7)
+#if FEATURE_CAN_HAS_FD
+    uint8_t region0MaxMb = FLEXCAN_GetRegion0MaxMbCount(base);
+
+    if (msgBuffIdx < region0MaxMb)
     {
-        /* Region0 (64B payload): MB 0~6, each 72B (18 words), all in block 0 */
         uint8_t mb_size = (uint8_t)(payload_size + arbitration_field_size);
         mb_index = msgBuffIdx * ((uint32_t)mb_size >> 2U);
     }
     else
     {
-        /* Region1 (8B payload): MB 7+, each 16B (4 words), start from block 1 (RAM[128]) */
         uint8_t mb_size = (uint8_t)(payload_size + arbitration_field_size);
-        uint32_t region1_idx = msgBuffIdx - 7U;
+        uint32_t region1_idx = msgBuffIdx - (uint32_t)region0MaxMb;
         mb_index = 128U + (region1_idx * ((uint32_t)mb_size >> 2U));
     }
+#else
+    uint8_t mb_size = (uint8_t)(payload_size + arbitration_field_size);
+    mb_index = msgBuffIdx * ((uint32_t)mb_size >> 2U);
+#endif
 
     return &(base->RAM[mb_index]);
 }
@@ -1098,7 +1125,11 @@ status_t FLEXCAN_SetMaxMsgBuffNum(   /* PRQA S 4700 */
     /* Check that the number of MBs is supported based on the payload size*/
     volatile uint32_t *valEndMbPointer = FLEXCAN_GetMsgBuffRegion(base, (maxMsgBuffNum - 1U));
     uint32_t valEndMb = (uint32_t)valEndMbPointer + can_real_payload + arbitration_field_size;
-    if ((valEndMb > (uint32_t)&base->RAM[FEATURE_CAN_RAM_COUNT]) || (maxMsgBuffNum > FLEXCAN_GetMaxMbNum(base)))
+    uint32_t totalMaxMb = (uint32_t)FLEXCAN_GetRegion0MaxMbCount(base)
+                        + (uint32_t)FLEXCAN_GetRegion1MaxMbCount(base);
+    if ((valEndMb > (uint32_t)&base->RAM[FEATURE_CAN_RAM_COUNT])
+        || (maxMsgBuffNum > FLEXCAN_GetMaxMbNum(base))
+        || (maxMsgBuffNum > totalMaxMb))
 #else
     /* Check that the number of MBs is supported based on features defined */
     if (maxMsgBuffNum > FLEXCAN_GetMaxMbNum(base))
@@ -1980,34 +2011,35 @@ bool FLEXCAN_IsOutOfRangeMbIdx(const CAN_Type * base, uint32_t msgBuffIdx)   /* 
 /*FUNCTION**********************************************************************
  *
  * Function Name : FLEXCAN_SetPayloadSize
- * Description   : Sets the payload size of the MBs.
+ * Description   : Sets the payload size of MBs in each region.
  *
  *END**************************************************************************/
 void FLEXCAN_SetPayloadSize(
     CAN_Type * base,
-    flexcan_fd_payload_size_t payloadSize)
+    flexcan_fd_payload_size_t region0Payload,
+    flexcan_fd_payload_size_t region1Payload)
 {
     uint32_t tmp;
 
-    DEV_ASSERT(FLEXCAN_IsFDEnabled(base) || (payloadSize == FLEXCAN_PAYLOAD_SIZE_8));
+    DEV_ASSERT(FLEXCAN_IsFDEnabled(base) || (region0Payload == FLEXCAN_PAYLOAD_SIZE_8));
 
     /* If FD is not enabled, only 8 bytes payload is supported */
     if (FLEXCAN_IsFDEnabled(base))
     {
         tmp = base->FDCTRL;
         tmp &= ~(CAN_FDCTRL_MBDSR0_MASK);
-        tmp |= ((uint32_t)FLEXCAN_PAYLOAD_SIZE_64) << CAN_FDCTRL_MBDSR0_SHIFT;
+        tmp |= ((uint32_t)region0Payload) << CAN_FDCTRL_MBDSR0_SHIFT;
 #if FEATURE_CAN_HAS_MBDSR1
         tmp &= ~(CAN_FDCTRL_MBDSR1_MASK);
-        tmp |= ((uint32_t)FLEXCAN_PAYLOAD_SIZE_8) << CAN_FDCTRL_MBDSR1_SHIFT;
+        tmp |= ((uint32_t)region1Payload) << CAN_FDCTRL_MBDSR1_SHIFT;
 #endif
 #if FEATURE_CAN_HAS_MBDSR2
         tmp &= ~(CAN_FDCTRL_MBDSR2_MASK);
-        tmp |= ((uint32_t)payloadSize) << CAN_FDCTRL_MBDSR2_SHIFT;
+        tmp |= ((uint32_t)region0Payload) << CAN_FDCTRL_MBDSR2_SHIFT;
 #endif
 #if defined (FEATURE_CAN_HAS_MBDSR3)&&(FEATURE_CAN_HAS_MBDSR3 == 1)
         tmp &= ~(CAN_FDCTRL_MBDSR3_MASK);
-        tmp |= ((uint32_t)payloadSize) << CAN_FDCTRL_MBDSR3_SHIFT;
+        tmp |= ((uint32_t)region0Payload) << CAN_FDCTRL_MBDSR3_SHIFT;
 #endif
         base->FDCTRL = tmp;
     }
@@ -2028,8 +2060,9 @@ uint8_t FLEXCAN_GetPayloadSize(const CAN_Type * base, uint32_t msgBuffIdx)
     {
         payloadSize = 8U;
     }
-    /* Region0 (MBDSR0) = MB 0~6 (64B), Region1 (MBDSR1) = MB 7+ (8B) */
-    else if (msgBuffIdx < 7)
+    /* Read MBDSR0 for Region 0, MBDSR1 for Region 1.
+     * Boundary computed from MBDSR0 payload: how many MBs fit in 512B? */
+    else if (msgBuffIdx < FLEXCAN_GetRegion0MaxMbCount(base))
     {
         payloadSize = 1UL << (((base->FDCTRL & CAN_FDCTRL_MBDSR0_MASK) >> CAN_FDCTRL_MBDSR0_SHIFT) + 3U);
     }

@@ -65,7 +65,7 @@ flexcan_msgbuff_t txMsg1 = {
 /* 64-bit message */
 const flexcan_data_info_t rxMbStdInfo0 = {
     .msg_id_type = FLEXCAN_MSG_ID_STD,
-    .data_length = 64,
+    .data_length = 16,
     .fd_enable = true,
     .fd_padding = 0,
     .enable_brs = true,
@@ -74,7 +74,7 @@ const flexcan_data_info_t rxMbStdInfo0 = {
 
 const flexcan_data_info_t rxMbExtInfo0 = {
     .msg_id_type = FLEXCAN_MSG_ID_EXT,
-    .data_length = 64,
+    .data_length = 16,
     .fd_enable = true,
     .fd_padding = 0,
     .enable_brs = true,
@@ -83,7 +83,7 @@ const flexcan_data_info_t rxMbExtInfo0 = {
 
 const flexcan_data_info_t txMbStdInfo0 = {
     .msg_id_type = FLEXCAN_MSG_ID_STD,
-    .data_length = 64,
+    .data_length = 16,
     .fd_enable = true,
     .fd_padding = 0,
     .enable_brs = true,
@@ -92,7 +92,7 @@ const flexcan_data_info_t txMbStdInfo0 = {
 
 const flexcan_data_info_t txMbExtInfo0 = {
     .msg_id_type = FLEXCAN_MSG_ID_EXT,
-    .data_length = 64,
+    .data_length = 16,
     .fd_enable = true,
     .fd_padding = 0,
     .enable_brs = true,
@@ -196,25 +196,25 @@ int main(void)
     /* Configure 8B RX STD buffer: MB 7~14 */
     for(int i = 0; i < 8; i++)
     {
-        status |= FLEXCAN_DRV_ConfigRxMb(CAN0_INST, 7+i, &rxMbStdInfo1, RX_MSG_ID1+2+i);
+        status |= FLEXCAN_DRV_ConfigRxMb(CAN0_INST, 21+i, &rxMbStdInfo1, RX_MSG_ID1+2+i);
     }
 
     /* Configure 8B RX EXT buffer: MB 15~22 */
     for(int i = 0; i < 8; i++)
     {
-        status |= FLEXCAN_DRV_ConfigRxMb(CAN0_INST, 15+i, &rxMbExtInfo1, RX_MSG_ID2+1+i);
+        status |= FLEXCAN_DRV_ConfigRxMb(CAN0_INST, 29+i, &rxMbExtInfo1, RX_MSG_ID2+1+i);
     }
 
     /* Configure 8B TX STD buffer: MB 23~30 */
     for(int i = 0; i < 8; i++)
     {
-        status |= FLEXCAN_DRV_ConfigTxMb(CAN0_INST, 23+i, &txMbStdInfo1, TX_MSG_ID1+i+2);
+        status |= FLEXCAN_DRV_ConfigTxMb(CAN0_INST, 37+i, &txMbStdInfo1, TX_MSG_ID1+i+2);
     }
 
     /* Configure 8B TX EXT buffer: MB 31~38 */
     for(int i = 0; i < 8; i++)
     {
-        status |= FLEXCAN_DRV_ConfigTxMb(CAN0_INST, 31+i, &txMbExtInfo1, TX_MSG_ID2+i+2);
+        status |= FLEXCAN_DRV_ConfigTxMb(CAN0_INST, 45+i, &txMbExtInfo1, TX_MSG_ID2+i+2);
     }
     
     /* Start receiving data in RX_MAILBOX. */
@@ -224,7 +224,7 @@ int main(void)
     }
     for(int i = 0; i < 16; i++)
     {
-        status |= FLEXCAN_DRV_Receive(CAN0_INST, i+7, &rxMsg1);
+        status |= FLEXCAN_DRV_Receive(CAN0_INST, i+21, &rxMsg1);
     }
 
     /* USER CODE END 2 */
@@ -240,7 +240,7 @@ int main(void)
          /* 64B TX: MB 3~6 */
         if (FLEXCAN_DRV_GetTransferStatus(CAN0_INST, 3) != STATUS_BUSY)
         {
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < 16; i++)
             {
                 txMsg0.data[i] = offset1 + i;
             }
@@ -263,21 +263,21 @@ int main(void)
             status |= FLEXCAN_DRV_Send(CAN0_INST, 6, &txMbExtInfo0, TX_MSG_ID2+1, txMsg0.data);
         }
         
-        /* 8B TX STD: MB 23~30 */
+        /* 8B TX STD: MB 37~44 */
         for(int i = 0; i < 8; i++)
         {
-            if (FLEXCAN_DRV_GetTransferStatus(CAN0_INST, 23+i) != STATUS_BUSY)
+            if (FLEXCAN_DRV_GetTransferStatus(CAN0_INST, 37+i) != STATUS_BUSY)
             {
-                status |= FLEXCAN_DRV_Send(CAN0_INST, 23+i, &txMbStdInfo1, TX_MSG_ID1+i+2, txMsg0.data);
+                status |= FLEXCAN_DRV_Send(CAN0_INST, 37+i, &txMbStdInfo1, TX_MSG_ID1+i+2, txMsg0.data);
             }
         }
 
-        /* 8B TX EXT: MB 31~38 */
+        /* 8B TX EXT: MB 45~52 */
         for(int i = 0; i < 8; i++)
         {
-            if (FLEXCAN_DRV_GetTransferStatus(CAN0_INST, 31+i) != STATUS_BUSY)
+            if (FLEXCAN_DRV_GetTransferStatus(CAN0_INST, 45+i) != STATUS_BUSY)
             {
-                status |= FLEXCAN_DRV_Send(CAN0_INST, 31+i, &txMbExtInfo1, TX_MSG_ID2+i+2, txMsg0.data);
+                status |= FLEXCAN_DRV_Send(CAN0_INST, 45+i, &txMbExtInfo1, TX_MSG_ID2+i+2, txMsg0.data);
             }
         }
 

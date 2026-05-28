@@ -19,11 +19,12 @@
 flexcan_state_t flexcanInitConfig0_State;
 
 const flexcan_user_config_t flexcanInitConfig0 = {
-    .max_num_mb = 39UL,
+    .max_num_mb = 53UL,
     .num_id_filters = FLEXCAN_RX_FIFO_ID_FILTERS_8,
     .is_rx_fifo_needed = false,
     .flexcanMode = FLEXCAN_NORMAL_MODE,
-    .payload = FLEXCAN_PAYLOAD_SIZE_8,
+    .region0_payload = FLEXCAN_PAYLOAD_SIZE_16,
+    .region1_payload = FLEXCAN_PAYLOAD_SIZE_8,
     .fd_enable = true,
     .pe_clock = FLEXCAN_CLK_SOURCE_OSC,
     .transfer_type = FLEXCAN_RXFIFO_USING_INTERRUPTS,

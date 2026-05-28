@@ -981,8 +981,8 @@ status_t FLEXCAN_DRV_Init(
     if(result == STATUS_SUCCESS)
     {
 #if FEATURE_CAN_HAS_FD
-        /* Set payload size. */
-        FLEXCAN_SetPayloadSize(base, data->payload);
+        /* Set payload size for each region. */
+        FLEXCAN_SetPayloadSize(base, data->region0_payload, data->region1_payload);
 #endif
         result = FLEXCAN_SetMaxMsgBuffNum(base, data->max_num_mb);
         if (result != STATUS_SUCCESS)
@@ -3486,8 +3486,10 @@ uint32_t FLEXCAN_DRV_GetDefaultConfig(flexcan_user_config_t * config)
     /* Time segments for the arbitration phase */
     config->bitrate = timeSeg;
 #if FEATURE_CAN_HAS_FD
-    /* Payload size */
-    config->payload = FLEXCAN_PAYLOAD_SIZE_8;
+    /* Payload size for Region 0 */
+    config->region0_payload = FLEXCAN_PAYLOAD_SIZE_8;
+    /* Payload size for Region 1 */
+    config->region1_payload = FLEXCAN_PAYLOAD_SIZE_8;
     /* Flexible data rate is disabled */
     config->fd_enable = false;
     /* Time segments for the data phase of FD frames */

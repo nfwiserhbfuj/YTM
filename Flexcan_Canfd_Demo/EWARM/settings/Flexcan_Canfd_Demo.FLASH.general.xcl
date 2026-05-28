@@ -1,0 +1,17 @@
+"C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\bin\armPROC.dll" 
+
+"C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\bin\armJLINK.dll" 
+
+"C:\Users\ytm\Desktop\test_MCAL\Flexcan_Canfd_Demo\Flexcan_Canfd_Demo\EWARM\FLASH\Exe\Flexcan_Canfd_Demo.out" 
+
+--plugin="C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm\bin\armbat.dll" 
+
+--device_macro="C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm/config/debugger/YTMicro/YTM32B1ME05.dmac" 
+
+--device_macro="C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm/config/debugger/YTMicro/YTM32B1ME05_Trace.mac" 
+
+--flash_loader="C:\Program Files\IAR Systems\Embedded Workbench 9.0\arm/config/flashloader/YTMicro/FlashYTM32B1ME05.board" 
+
+
+
+

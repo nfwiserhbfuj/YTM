@@ -356,7 +356,9 @@ typedef struct
     flexcan_operation_modes_t flexcanMode;          /*!< User configurable FlexCAN operation modes.
                                                          */
 #if FEATURE_CAN_HAS_FD
-    flexcan_fd_payload_size_t payload;              /*!< The payload size of the mailboxes specified in bytes. */
+    flexcan_fd_payload_size_t region0_payload;      /*!< The payload size of Region 0 (MBDSR0) mailboxes specified in bytes. */
+    flexcan_fd_payload_size_t region1_payload;      /*!< The payload size of Region 1 (MBDSR1) mailboxes specified in bytes.
+                                                         Set to the same value as payload for single-region mode. */
     bool fd_enable;                                 /*!< Enable/Disable the Flexible Data Rate feature. */
 #endif
 #if FEATURE_CAN_HAS_PE_CLKSRC_SELECT

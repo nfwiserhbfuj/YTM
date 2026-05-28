@@ -572,14 +572,16 @@ static inline bool FLEXCAN_IsFDEnabled(const CAN_Type * base)
 }
 
 /*!
- * @brief Sets the payload size of the MBs.
+ * @brief Sets the payload size of MBs in each region.
  *
- * @param   base         The FlexCAN base address
- * @param   payloadSize  The payload size
+ * @param   base            The FlexCAN base address
+ * @param   region0Payload  The payload size for Region 0 (MBDSR0)
+ * @param   region1Payload  The payload size for Region 1 (MBDSR1)
  */
 void FLEXCAN_SetPayloadSize(
     CAN_Type * base,
-    flexcan_fd_payload_size_t payloadSize);
+    flexcan_fd_payload_size_t region0Payload,
+    flexcan_fd_payload_size_t region1Payload);
 
 /*!
  * @brief Gets the payload size of the MBs.
