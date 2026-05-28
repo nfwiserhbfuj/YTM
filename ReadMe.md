@@ -10,11 +10,14 @@
 
 ## Flexcan_Canfd_Demo 简介
 
-演示 FlexCAN CANFD 模式下多邮箱收发通信：
+演示 FlexCAN CANFD 模式下双 Region 不同负载多邮箱收发通信：
 
 - **CANFD 模式**：标称波特率 500Kbps，数据波特率 2000Kbps
-- **64B 报文**：MB 0~2 (RX)、MB 3~6 (TX)，支持总线负载测试
-- **8B 报文**：MB 7~14 (RX STD)、MB 15~22 (RX EXT)、MB 23~30 (TX STD)、MB 31~38 (TX EXT)
+- **双 Region 不同负载**：Region 0 (MBDSR0) = 16B，Region 1 (MBDSR1) = 8B，配置 53 个邮箱
+- **16B 报文 (Region 0)**：物理 MB 0~2 (RX)、MB 3~6 (TX)
+- **8B 报文 (Region 1)**：物理 MB 21~28 (RX STD)、MB 29~36 (RX EXT)、MB 37~44 (TX STD)、MB 45~52 (TX EXT)
+
+> 详细说明参见 [Flexcan_Canfd_Demo/README.md](./Flexcan_Canfd_Demo/README.md)
 
 ## 环境要求
 
